@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Dinas - Desa Kedungwinangun</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #f5f5f4;
+            --surface: #ffffff;
+            --border: #e7e5e4;
+            --text: #1c1917;
+            --text-muted: #78716c;
+            --primary: #166534;
+            --primary-hover: #14532d;
+            --error: #dc2626;
+            --warning: #d97706;
+            --success: #16a34a;
+        }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+        .navbar {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 0 24px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .nav-left { display: flex; align-items: center; gap: 24px; }
+        .nav-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; text-decoration: none; color: var(--text); }
+        .nav-brand .icon { width: 32px; height: 32px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .nav-brand .icon svg { width: 18px; height: 18px; fill: white; }
+        .nav-links { display: none; gap: 4px; }
+        @media (min-width: 640px) { .nav-links { display: flex; } }
+        .nav-link { padding: 8px 14px; text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 500; border-radius: 6px; }
+        .nav-link:hover { background: var(--bg); color: var(--text); }
+        .nav-link.active { background: var(--bg); color: var(--text); }
+        .nav-right { display: flex; align-items: center; gap: 12px; }
+        .user-info { display: flex; align-items: center; gap: 8px; padding: 6px 12px; background: var(--bg); border-radius: 100px; font-size: 13px; font-weight: 500; }
+        .role-badge { background: var(--primary); color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; text-transform: uppercase; }
+        .btn-ghost { padding: 8px 14px; background: transparent; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; font-weight: 500; color: var(--text-muted); text-decoration: none; }
+        .btn-ghost:hover { border-color: var(--text-muted); color: var(--text); }
+        .main { max-width: 1200px; margin: 0 auto; padding: 28px 24px; }
+        .page-header { margin-bottom: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        .page-header h1 { font-size: 26px; font-weight: 700; }
+        .page-header p { color: var(--text-muted); font-size: 14px; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 28px; }
+        .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+        .stat-label { font-size: 13px; color: var(--text-muted); font-weight: 500; margin-bottom: 8px; }
+        .stat-value { font-size: 32px; font-weight: 700; }
+        .stat-icon { font-size: 20px; margin-bottom: 12px; }
+        .stat-card.warning .stat-value { color: var(--warning); }
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 24px; overflow: hidden; }
+        .card-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; background: #fafaf9; }
+        .card-header h2 { font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .card-header a { font-size: 13px; font-weight: 500; color: var(--primary); text-decoration: none; }
+        .card-header a:hover { text-decoration: underline; }
+        .table-wrap { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; min-width: 700px; }
+        th { text-align: left; padding: 12px 16px; font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; background: #fafaf9; border-bottom: 1px solid var(--border); }
+        td { padding: 14px 16px; font-size: 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+        tr:hover td { background: #fafaf9; }
+        .badge { display: inline-flex; padding: 4px 10px; border-radius: 100px; font-size: 12px; font-weight: 500; }
+        .badge-pending { background: #fffbeb; color: #92400e; }
+        .badge-approved { background: #dcfce7; color: #166534; }
+        .badge-rejected { background: #fef2f2; color: #dc2626; }
+        .actions { display: flex; gap: 8px; }
+        .btn-action { padding: 8px 14px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; border: none; font-family: inherit; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-approve { background: #dcfce7; color: #166534; }
+        .btn-approve:hover { background: #166534; color: white; }
+        .btn-reject { background: #fef2f2; color: #dc2626; }
+        .btn-reject:hover { background: #dc2626; color: white; }
+        .btn-view { background: #dbeafe; color: #1d4ed8; }
+        .btn-view:hover { background: #1d4ed8; color: white; }
+        .empty { text-align: center; padding: 48px 20px; color: var(--text-muted); }
+        .alert { padding: 14px 16px; border-radius: 10px; font-size: 14px; margin-bottom: 20px; }
+        .alert-success { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+        .empty-icon { font-size: 48px; margin-bottom: 16px; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="{{ url_for('public.index') }}" class="nav-brand">
+                <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3L4 9v12h16V9l-8-6zm6 16h-3v-5h-6v5H6v-9.5l6-4.5 6 4.5V19z"/></svg></div>
+                Kedungwinangun
+            </a>
+            <div class="nav-links">
+                <a href="{{ url_for('dinas.dashboard') }}" class="nav-link active">Dashboard</a>
+                <a href="{{ url_for('dinas.pending_users') }}" class="nav-link">Pendaftaran</a>
+                <a href="{{ url_for('dinas.permohonan_list') }}" class="nav-link">Permohonan Surat</a>
+                <a href="{{ url_for('dinas.all_users') }}" class="nav-link">Data Warga</a>
+            </div>
+        </div>
+        <div class="nav-right">
+            <div class="user-info">
+                <span>{{ session.user_nama }}</span>
+                <span class="role-badge">{{ session.user_role }}</span>
+            </div>
+            <a href="{{ url_for('user.logout') }}" class="btn-ghost">Keluar</a>
+        </div>
+    </nav>
+
+    <main class="main">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="page-header">
+            <div>
+                <h1>Dashboard Dinas</h1>
+                <p>Selamat datang, {{ session.user_nama }}!</p>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card warning">
+                <div class="stat-icon">👤</div>
+                <div class="stat-label">Pendaftaran Pending</div>
+                <div class="stat-value">{{ stats.pending_users }}</div>
+            </div>
+            <div class="stat-card warning">
+                <div class="stat-icon">📄</div>
+                <div class="stat-label">Permohonan Pending</div>
+                <div class="stat-value">{{ stats.pending_permits }}</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">✅</div>
+                <div class="stat-label">Disetujui</div>
+                <div class="stat-value">{{ stats.approved_permits }}</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-label">Total Permohonan</div>
+                <div class="stat-value">{{ stats.total_permits }}</div>
+            </div>
+        </div>
+
+        <!-- Pending Users -->
+        <div class="card">
+            <div class="card-header">
+                <h2>👤 Pendaftaran Penduduk Baru</h2>
+                <a href="{{ url_for('dinas.pending_users') }}">Lihat semua →</a>
+            </div>
+            <div class="table-wrap">
+                {% if pending_users %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>NIK</th>
+                            <th>Nama</th>
+                            <th>Telepon</th>
+                            <th>Alamat</th>
+                            <th>Tanggal</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in pending_users[:5] %}
+                        <tr>
+                            <td>{{ user.nik }}</td>
+                            <td>{{ user.nama_lengkap }}</td>
+                            <td>{{ user.no_telepon }}</td>
+                            <td style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ user.alamat }}</td>
+                            <td>{{ user.created_at }}</td>
+                            <td>
+                                <div class="actions">
+                                    <form action="{{ url_for('dinas_approve_user', user_id=user.id) }}" method="POST" style="display: inline;">
+                                        <button type="submit" class="btn-action btn-approve" onclick="return confirm('Setujui pendaftaran ini?')">✓ Setuju</button>
+                                    </form>
+                                    <form action="{{ url_for('dinas_reject_user', user_id=user.id) }}" method="POST" style="display: inline;">
+                                        <button type="submit" class="btn-action btn-reject" onclick="return confirm('Tolak pendaftaran ini?')">✗ Tolak</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="empty">
+                    <div class="empty-icon">✓</div>
+                    <p>Tidak ada pendaftaran pending</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Pending Permohonan -->
+        <div class="card">
+            <div class="card-header">
+                <h2>📄 Permohonan Surat Pending</h2>
+                <a href="{{ url_for('dinas.permohonan_list') }}">Lihat semua →</a>
+            </div>
+            <div class="table-wrap">
+                {% if pending_permits %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>NIK</th>
+                            <th>Nama</th>
+                            <th>Jenis Surat</th>
+                            <th>Tanggal</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for permit in pending_permits[:5] %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ permit.nik }}</td>
+                            <td>{{ permit.nama_lengkap }}</td>
+                            <td>{{ permit.jenis_nama }}</td>
+                            <td>{{ permit.created_at }}</td>
+                            <td>
+                                <div class="actions">
+                                    <a href="{{ url_for('dinas_permohonan_detail', permit_id=permit.id) }}" class="btn-action btn-view">👁</a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="empty">
+                    <div class="empty-icon">✓</div>
+                    <p>Tidak ada permohonan surat pending</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+</body>
+</html>
