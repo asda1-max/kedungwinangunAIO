@@ -406,8 +406,332 @@
                 </a>
             </div>
 
+            <!-- ── POTENSI DESA ───────────────────────────────── -->
+            <h2 class="title-underline reveal relative inline-flex items-center gap-3
+                        text-[#155C1B] text-2xl md:text-4xl xl:text-[44px]
+                        font-extrabold mt-16 md:mt-20 mb-10">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                    <path d="M2 17l10 5 10-5"/>
+                    <path d="M2 12l10 5 10-5"/>
+                </svg>
+                Potensi Desa
+            </h2>
+
+            {% set potensi_list = [
+                {
+                    'nama': 'Pertanian Padi Organik',
+                    'kategori': 'Pertanian',
+                    'icon': '🌾',
+                    'gambar_url': 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+                    'deskripsi': 'Desa Kedungwinangun memiliki lahan pertanian padi organik seluas 150 hektar yang dikelola secara tradisional dengan pupuk alami.',
+                    'lokasi': 'Dusun Kedung',
+                    'link': '#'
+                },
+                {
+                    'nama': 'Kerajinan Bambu',
+                    'kategori': 'Kerajinan',
+                    'icon': '🎋',
+                    'gambar_url': 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+                    'deskripsi': 'Pengrajin bamboo lokal menghasilkan berbagai kerajinan tangan seperti anyaman, tempat duduk, dan dekorasi rumah.',
+                    'lokasi': 'Dusun Winangun',
+                    'link': '#'
+                },
+                {
+                    'nama': 'Wisata Sungai Bodri',
+                    'kategori': 'Pariwisata',
+                    'icon': '🏞️',
+                    'gambar_url': 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+                    'deskripsi': 'Sungai Bodri menawarkan pemandangan alam yang asri dengan fasilitas mandi bola dan spot foto instagramable.',
+                    'lokasi': 'Dusun Bodri',
+                    'link': '#'
+                },
+                {
+                    'nama': 'Budidaya Ikan Lele',
+                    'kategori': 'Perikanan',
+                    'icon': '🐟',
+                    'gambar_url': 'https://images.unsplash.com/photo-1524704654690-b56c05c78a00?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+                    'deskripsi': 'Kolam ikan lele dengan sistem bioflok menghasilkan produksi tinggi dan ramah lingkungan.',
+                    'lokasi': 'Dusun Winangun',
+                    'link': '#'
+                },
+                {
+                    'nama': 'Terasering Padi',
+                    'kategori': 'Pertanian',
+                    'icon': '🌿',
+                    'gambar_url': 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+                    'deskripsi': 'Hamparan sawah terasering yang membentang di kaki bukit menciptakan pemandangan spektakuler.',
+                    'lokasi': 'Dusun Krajan',
+                    'link': '#'
+                },
+                {
+                    'nama': 'Wedang Jahe Khas Desa',
+                    'kategori': 'Kuliner',
+                    'icon': '☕',
+                    'gambar_url': 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+                    'deskripsi': 'Minuman herbal tradisional dari jahe, serai, dan rempah pilihan yang hangat dan menyehatkan.',
+                    'lokasi': 'Dusun Kedung',
+                    'link': '#'
+                },
+                {
+                    'nama': 'Batik Tulis Kedungwinangun',
+                    'kategori': 'Kerajinan',
+                    'icon': '🧵',
+                    'gambar_url': 'https://images.unsplash.com/photo-1618220179428-22790b461013?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+                    'deskripsi': 'Batik tulis dengan motif khas daerah yang dihasilkan oleh para pengrajin batik desa.',
+                    'lokasi': 'Dusun Winangun',
+                    'link': '#'
+                },
+                {
+                    'nama': 'Hutan Kesejarahan',
+                    'kategori': 'Pariwisata',
+                    'icon': '🌳',
+                    'gambar_url': 'https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+                    'deskripsi': 'Hutan bekas penebangan ilegal yang kini dikelola menjadi kawasan konservasi dan edukasi lingkungan.',
+                    'lokasi': 'Dusun Bodri',
+                    'link': '#'
+                }
+            ] %}
+
+            <!-- Potensi Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-6 mb-10">
+                {% for potensi in potensi_list %}
+                <div class="reveal group relative flex flex-col overflow-hidden
+                            bg-gradient-to-br from-white to-[#f0fdf4]
+                            rounded-2xl border border-[rgba(21,92,27,0.08)]
+                            shadow-[0_4px_15px_rgba(21,92,27,0.05)]
+                            transition-all duration-400 hover:-translate-y-1.5 hover:shadow-[0_15px_35px_rgba(21,92,27,0.12)]
+                            hover:border-[rgba(21,92,27,0.15)]"
+                     style="transition-delay: {{ loop.index * 0.06 }}s">
+                    <!-- Icon Badge -->
+                    <div class="absolute top-4 right-4 w-12 h-12 rounded-xl bg-[#155C1B]/08 flex items-center justify-center
+                                group-hover:bg-[#155C1B] transition-all duration-400 group-hover:scale-110">
+                        <span class="text-2xl group-hover:scale-110 transition-transform duration-400">{{ potensi.icon }}</span>
+                    </div>
+
+                    <!-- Image -->
+                    <div class="h-40 overflow-hidden rounded-t-2xl">
+                        <img src="{{ potensi.gambar_url }}"
+                             alt="{{ potensi.nama }}"
+                             class="w-full h-full object-cover
+                                    transition-transform duration-500 group-hover:scale-110">
+                    </div>
+
+                    <!-- Content -->
+                    <div class="flex flex-col flex-1 p-5">
+                        <span class="inline-flex items-center gap-1.5 mb-2 text-[10px] font-bold uppercase tracking-wider
+                                     text-[#73AA0F] bg-[#f0fdf4] px-2.5 py-1 rounded-full w-fit">
+                            {{ potensi.kategori }}
+                        </span>
+                        <h3 class="text-[#155C1B] text-base font-bold leading-snug mb-2">
+                            {{ potensi.nama }}
+                        </h3>
+                        <p class="text-gray-500 text-xs leading-relaxed flex-1 line-clamp-3">
+                            {{ potensi.deskripsi }}
+                        </p>
+
+                        <!-- Footer -->
+                        <div class="flex items-center justify-between mt-4 pt-3 border-t border-gray-100">
+                            <span class="text-[10px] text-gray-400 font-medium flex items-center gap-1">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                    <circle cx="12" cy="10" r="3"/>
+                                </svg>
+                                {{ potensi.lokasi }}
+                            </span>
+                            {% if potensi.link %}
+                            <a href="{{ potensi.link }}"
+                               class="text-[10px] font-semibold text-[#155C1B] hover:text-[#73AA0F]
+                                      transition-colors duration-200 flex items-center gap-1">
+                                Detail
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Empty State (if no potensi) -->
+            {% if not potensi_list %}
+            <div class="flex flex-col items-center justify-center py-16 text-center">
+                <div class="w-20 h-20 rounded-full bg-[#f0fdf4] flex items-center justify-center mb-4">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#155C1B" stroke-width="1.5">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        <path d="M2 17l10 5 10-5"/>
+                        <path d="M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <h3 class="text-[#155C1B] text-lg font-bold mb-2">Potensi Sedang Disiapkan</h3>
+                <p class="text-gray-500 text-sm max-w-sm">
+                    Informasi potensi desa akan segera hadir. Stay tuned untuk mengetahui lebih lanjut tentang potensi {{ desa.nama }}.
+                </p>
+            </div>
+            {% endif %}
+
+            <!-- ── GALERI DESA ──────────────────────────────── -->
+            <h2 class="title-underline reveal relative inline-flex items-center gap-3
+                        text-[#155C1B] text-2xl md:text-4xl xl:text-[44px]
+                        font-extrabold mt-16 md:mt-20 mb-10">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                    <circle cx="8.5" cy="8.5" r="1.5"/>
+                    <polyline points="21 15 16 10 5 21"/>
+                </svg>
+                Galeri Desa
+            </h2>
+
+            <!-- Galeri Grid -->
+            {% if galeri_list %}
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-10">
+                {% for foto in galeri_list %}
+                <div class="reveal group relative overflow-hidden rounded-xl aspect-square cursor-pointer"
+                     style="transition-delay: {{ loop.index * 0.05 }}s"
+                     onclick="openLightbox('{{ foto.gambar_url }}', '{{ foto.judul }}')">
+                    <img src="{{ foto.gambar_url }}"
+                         alt="{{ foto.gambar_alt or foto.judul }}"
+                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div class="absolute bottom-3 left-3 right-3">
+                            <p class="text-white text-sm font-semibold truncate">{{ foto.judul }}</p>
+                            <span class="text-white/80 text-xs">{{ foto.kategori }}</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Lihat Semua Galeri -->
+            <div class="reveal flex justify-center mb-6">
+                <a href="{{ url_for('public.galeri') }}" class="btn-all-news">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                    Lihat Semua Galeri
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+            {% else %}
+            <!-- Empty State -->
+            <div class="flex flex-col items-center justify-center py-16 text-center bg-[#f0fdf4] rounded-2xl mb-10">
+                <div class="w-20 h-20 rounded-full bg-white flex items-center justify-center mb-4 shadow-sm">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#155C1B" stroke-width="1.5">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                </div>
+                <h3 class="text-[#155C1B] text-lg font-bold mb-2">Galeri Belum Tersedia</h3>
+                <p class="text-gray-500 text-sm max-w-sm">
+                    Foto galeri akan segera ditambahkan. Pantau terus untuk melihat kegiatan dan potensi desa kami.
+                </p>
+            </div>
+            {% endif %}
+
         </div><!-- /content-section -->
     </div><!-- /wrapper -->
+
+    <!-- Lightbox Modal -->
+    <div id="lightbox" class="fixed inset-0 bg-black/90 z-[200] hidden items-center justify-center p-4" onclick="closeLightbox()">
+        <button class="absolute top-4 right-4 text-white text-3xl hover:text-gray-300 transition-colors" onclick="closeLightbox()">×</button>
+        <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[90vh] object-contain rounded-lg">
+        <p id="lightbox-caption" class="absolute bottom-6 left-0 right-0 text-center text-white text-lg font-semibold"></p>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#0F5B21] text-white">
+        <div class="w-full max-w-[480px] md:max-w-none mx-auto px-6 py-12 md:px-[5%]">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16 mb-10">
+                <!-- Brand -->
+                <div>
+                    <div class="flex items-center gap-3 mb-5">
+                        <img src="{{ url_for('static', filename='images/kebumen.png') }}" alt="Logo" class="w-10 h-12 md:w-12 md:h-14">
+                        <div>
+                            <h3 class="font-bold text-lg md:text-xl">{{ desa.nama }}</h3>
+                            <p class="text-green-300 text-xs md:text-sm">{{ desa.tagline }}</p>
+                        </div>
+                    </div>
+                    <p class="text-green-200 text-sm leading-relaxed">{{ desa.deskripsi }}</p>
+
+                    <!-- Social Icons -->
+                    <div class="flex gap-3 mt-5">
+                        {% if config.sosial_facebook %}
+                        <a href="https://facebook.com/{{ config.sosial_facebook }}" target="_blank" class="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                        {% endif %}
+                        {% if config.sosial_instagram %}
+                        <a href="https://instagram.com/{{ config.sosial_instagram }}" target="_blank" class="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                        </a>
+                        {% endif %}
+                        {% if config.sosial_twitter %}
+                        <a href="https://twitter.com/{{ config.sosial_twitter }}" target="_blank" class="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="font-bold mb-5 text-green-300 uppercase text-xs tracking-wider">Navigasi</h4>
+                    <ul class="space-y-3">
+                        <li><a href="{{ url_for('public.index') }}" class="text-green-100 hover:text-white transition-colors text-sm flex items-center gap-2"><span class="text-green-400">›</span> Beranda</a></li>
+                        <li><a href="{{ url_for('public.layanan') }}" class="text-green-100 hover:text-white transition-colors text-sm flex items-center gap-2"><span class="text-green-400">›</span> Layanan</a></li>
+                        <li><a href="{{ url_for('public.surat_info') }}" class="text-green-100 hover:text-white transition-colors text-sm flex items-center gap-2"><span class="text-green-400">›</span> Surat</a></li>
+                        <li><a href="{{ url_for('public.berita') }}" class="text-green-100 hover:text-white transition-colors text-sm flex items-center gap-2"><span class="text-green-400">›</span> Berita</a></li>
+                        <li><a href="{{ url_for('public.kontak') }}" class="text-green-100 hover:text-white transition-colors text-sm flex items-center gap-2"><span class="text-green-400">›</span> Kontak</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="font-bold mb-5 text-green-300 uppercase text-xs tracking-wider">Kontak</h4>
+                    <ul class="space-y-4 text-sm text-green-100">
+                        {% if config.alamat_desa %}
+                        <li class="flex items-start gap-3">
+                            <svg class="w-5 h-5 mt-0.5 shrink-0 text-green-400" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <span>{{ config.alamat_desa }}</span>
+                        </li>
+                        {% endif %}
+                        {% if config.kontak_telepon %}
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 shrink-0 text-green-400" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.574 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            <span>{{ config.kontak_telepon }}</span>
+                        </li>
+                        {% endif %}
+                        {% if config.kontak_whatsapp %}
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 shrink-0 text-green-400" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+                            <span>+{{ config.kontak_whatsapp }}</span>
+                        </li>
+                        {% endif %}
+                        {% if config.kontak_email %}
+                        <li class="flex items-center gap-3">
+                            <svg class="w-5 h-5 shrink-0 text-green-400" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            <span class="break-all">{{ config.kontak_email }}</span>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Copyright -->
+            <div class="pt-6 border-t border-green-800 text-center">
+                <p class="text-green-300 text-xs">© {{ tahun }} {{ desa.nama }}. Hak Cipta Dilindungi.</p>
+            </div>
+        </div>
+    </footer>
 
     <script>
             // Featured News Carousel
@@ -517,6 +841,34 @@
             }, { threshold: 0.12 });
             targets.forEach(function (el) { observer.observe(el); });
         })();
+
+        // Lightbox
+        function openLightbox(imgSrc, caption) {
+            var lightbox = document.getElementById('lightbox');
+            var img = document.getElementById('lightbox-img');
+            var cap = document.getElementById('lightbox-caption');
+            if (lightbox && img && cap) {
+                img.src = imgSrc;
+                cap.textContent = caption;
+                lightbox.classList.remove('hidden');
+                lightbox.classList.add('flex');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeLightbox() {
+            var lightbox = document.getElementById('lightbox');
+            if (lightbox) {
+                lightbox.classList.add('hidden');
+                lightbox.classList.remove('flex');
+                document.body.style.overflow = '';
+            }
+        }
+
+        // Keyboard support for lightbox
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeLightbox();
+        });
     </script>
 
 </body>

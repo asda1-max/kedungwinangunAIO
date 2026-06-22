@@ -9,6 +9,7 @@ from models import (
     get_all_berita,
     get_berita_by_id,
     get_config,
+    get_all_galeri,
 )
 from config import NAV_LINKS, MAPS_EMBED_URL, DUSUN_DATA
 
@@ -26,6 +27,7 @@ def get_desa_info_with_maps():
 @public_bp.route("/")
 def index():
     """Halaman utama / Beranda"""
+    from datetime import datetime
     desa_info = get_desa_info_with_maps()
     berita_list = get_all_berita()
 
@@ -40,6 +42,9 @@ def index():
     featured_ids = [b['id'] for b in featured_list]
     grid_berita = [b for b in berita_list if b['id'] not in featured_ids][:max_berita]
 
+    # Galeri aktif
+    galeri_list = get_all_galeri(aktif=1)[:8]
+
     # Config untuk template
     show_maps = get_config("tampilkan_maps", "1") == "1"
     show_stats = get_config("tampilkan_statistik", "1") == "1"
@@ -48,12 +53,26 @@ def index():
     show_views = get_config("berita_tampilkan_views", "1") == "1"
     show_tanggal = get_config("berita_tampilkan_tanggal", "1") == "1"
 
+    # Footer config
+    config_data = {
+        'alamat_desa': get_config("alamat_desa", ""),
+        'kontak_telepon': get_config("kontak_telepon", ""),
+        'kontak_whatsapp': get_config("kontak_whatsapp", ""),
+        'kontak_email': get_config("kontak_email", ""),
+        'sosial_facebook': get_config("sosial_facebook", ""),
+        'sosial_instagram': get_config("sosial_instagram", ""),
+        'sosial_twitter': get_config("sosial_twitter", ""),
+    }
+
     return render_template(
         "index.html",
         desa=desa_info,
         nav_links=NAV_LINKS,
         featured_list=featured_list,
         berita_list=grid_berita,
+        galeri_list=galeri_list,
+        config=config_data,
+        tahun=datetime.now().year,
         show_maps=show_maps,
         show_stats=show_stats,
         show_dusun=show_dusun,
@@ -122,4 +141,46 @@ def layanan():
         "layanan.html",
         desa=desa_info,
         nav_links=[{**n, "active": n["label"] == "Layanan"} for n in NAV_LINKS],
+    )
+
+
+@public_bp.route("/kontak")
+def kontak():
+    """Halaman informasi kontak desa"""
+    from datetime import datetime
+    desa_info = get_desa_info_with_maps()
+
+    # Ambil data kontak dari config
+    kontak_data = {
+        'whatsapp': get_config("kontak_whatsapp", ""),
+        'telepon': get_config("kontak_telepon", ""),
+        'email': get_config("kontak_email", ""),
+        'alamat': get_config("alamat_desa", ""),
+        'facebook': get_config("sosial_facebook", ""),
+        'instagram': get_config("sosial_instagram", ""),
+        'twitter': get_config("sosial_twitter", ""),
+    }
+
+    return render_template(
+        "kontak.html",
+        desa=desa_info,
+        nav_links=[{**n, "active": n["label"] == "Kontak"} for n in NAV_LINKS],
+        kontak=kontak_data,
+        tahun=datetime.now().year,
+    )
+
+
+@public_bp.route("/galeri")
+def galeri():
+    """Halaman galeri foto desa"""
+    from datetime import datetime
+    desa_info = get_desa_info_with_maps()
+    foto_list = get_all_galeri(aktif=1)
+
+    return render_template(
+        "galeri.html",
+        desa=desa_info,
+        nav_links=[{**n, "active": n["label"] == "Lainnya"} for n in NAV_LINKS],
+        foto_list=foto_list,
+        tahun=datetime.now().year,
     )

@@ -102,6 +102,18 @@ def init_database():
             key TEXT PRIMARY KEY,
             value TEXT
         );
+
+        -- Galeri
+        CREATE TABLE IF NOT EXISTS galeri (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            judul TEXT NOT NULL,
+            deskripsi TEXT,
+            kategori TEXT DEFAULT 'galeri',
+            gambar_url TEXT NOT NULL,
+            gambar_alt TEXT,
+            aktif INTEGER DEFAULT 1,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
     ''')
 
     # Insert default config
@@ -443,5 +455,69 @@ def reject_permohonan_surat(permit_id, processed_by, catatan=''):
     cursor.execute('''
         UPDATE permohonan_surat SET status = ?, catatan = ? WHERE id = ?
     ''', ('rejected', catatan, permit_id))
+    conn.commit()
+    conn.close()
+
+
+# ════════════════════════════════════════════════════════════════════════
+# ── GALERI HELPERS ─────────────────────────────────────────────────────
+# ════════════════════════════════════════════════════════════════════════
+
+def get_all_galeri(aktif=None):
+    """Ambil semua foto galeri"""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    if aktif is not None:
+        cursor.execute('SELECT * FROM galeri WHERE aktif = ? ORDER BY created_at DESC', (aktif,))
+    else:
+        cursor.execute('SELECT * FROM galeri ORDER BY created_at DESC')
+    galeri = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+    return galeri
+
+def get_galeri_by_id(galeri_id):
+    """Ambil satu foto galeri"""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM galeri WHERE id = ?', (galeri_id,))
+    galeri = cursor.fetchone()
+    conn.close()
+    return dict(galeri) if galeri else None
+
+def add_galeri(judul, gambar_url, deskripsi='', kategori='galeri', gambar_alt=''):
+    """Tambah foto galeri"""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('''
+        INSERT INTO galeri (judul, deskripsi, kategori, gambar_url, gambar_alt)
+        VALUES (?, ?, ?, ?, ?)
+    ''', (judul, deskripsi, kategori, gambar_url, gambar_alt))
+    conn.commit()
+    conn.close()
+
+def update_galeri(galeri_id, judul, gambar_url, deskripsi, kategori, gambar_alt):
+    """Update foto galeri"""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('''
+        UPDATE galeri SET judul = ?, deskripsi = ?, kategori = ?, gambar_url = ?, gambar_alt = ?
+        WHERE id = ?
+    ''', (judul, deskripsi, kategori, gambar_url, gambar_alt, galeri_id))
+    conn.commit()
+    conn.close()
+
+def delete_galeri(galeri_id):
+    """Hapus foto galeri"""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM galeri WHERE id = ?', (galeri_id,))
+    conn.commit()
+    conn.close()
+
+def toggle_galeri_aktif(galeri_id):
+    """Toggle status aktif/nonaktif galeri"""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute('UPDATE galeri SET aktif = CASE WHEN aktif = 1 THEN 0 ELSE 1 END WHERE id = ?', (galeri_id,))
     conn.commit()
     conn.close()

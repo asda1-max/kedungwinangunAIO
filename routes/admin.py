@@ -16,6 +16,12 @@ from models import (
     update_config,
     get_user_by_nik,
     get_user_by_id,
+    get_all_galeri,
+    get_galeri_by_id,
+    add_galeri,
+    update_galeri,
+    delete_galeri,
+    toggle_galeri_aktif,
 )
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
@@ -246,3 +252,82 @@ def settings():
         return redirect(url_for('admin.settings'))
 
     return render_template("admin/settings.html", user=user)
+
+
+# ── Galeri Management ────────────────────────────────────────────────────
+
+@admin_bp.route("/galeri")
+@login_required
+def galeri():
+    """Halaman manajemen galeri"""
+    galeri_list = get_all_galeri()
+    return render_template(
+        "admin/galeri.html",
+        galeri_list=galeri_list,
+        total_galeri=len(galeri_list)
+    )
+
+
+@admin_bp.route("/galeri/add", methods=['GET', 'POST'])
+@login_required
+def add_galeri_route():
+    """Form tambah galeri"""
+    if request.method == 'POST':
+        judul = request.form.get('judul', '').strip()
+        deskripsi = request.form.get('deskripsi', '').strip()
+        kategori = request.form.get('kategori', 'galeri')
+        gambar_url = request.form.get('gambar_url', '').strip()
+        gambar_alt = request.form.get('gambar_alt', '').strip()
+
+        if judul and gambar_url:
+            add_galeri(judul, gambar_url, deskripsi, kategori, gambar_alt)
+            flash('Foto berhasil ditambahkan ke galeri!', 'success')
+            return redirect(url_for('admin.galeri'))
+        else:
+            flash('Judul dan URL gambar harus diisi!', 'error')
+
+    return render_template("admin/add_galeri.html")
+
+
+@admin_bp.route("/galeri/edit/<int:galeri_id>", methods=['GET', 'POST'])
+@login_required
+def edit_galeri_route(galeri_id):
+    """Form edit galeri"""
+    galeri = get_galeri_by_id(galeri_id)
+    if not galeri:
+        flash('Foto tidak ditemukan!', 'error')
+        return redirect(url_for('admin.galeri'))
+
+    if request.method == 'POST':
+        judul = request.form.get('judul', '').strip()
+        deskripsi = request.form.get('deskripsi', '').strip()
+        kategori = request.form.get('kategori', 'galeri')
+        gambar_url = request.form.get('gambar_url', '').strip()
+        gambar_alt = request.form.get('gambar_alt', '').strip()
+
+        if judul and gambar_url:
+            update_galeri(galeri_id, judul, gambar_url, deskripsi, kategori, gambar_alt)
+            flash('Foto berhasil diperbarui!', 'success')
+            return redirect(url_for('admin.galeri'))
+        else:
+            flash('Judul dan URL gambar harus diisi!', 'error')
+
+    return render_template("admin/edit_galeri.html", galeri=galeri)
+
+
+@admin_bp.route("/galeri/delete/<int:galeri_id>", methods=['POST'])
+@login_required
+def delete_galeri_route(galeri_id):
+    """Hapus galeri"""
+    delete_galeri(galeri_id)
+    flash('Foto berhasil dihapus dari galeri!', 'success')
+    return redirect(url_for('admin.galeri'))
+
+
+@admin_bp.route("/galeri/toggle/<int:galeri_id>", methods=['POST'])
+@login_required
+def toggle_galeri_route(galeri_id):
+    """Toggle status aktif/nonaktif galeri"""
+    toggle_galeri_aktif(galeri_id)
+    flash('Status galeri berhasil diubah!', 'success')
+    return redirect(url_for('admin.galeri'))
