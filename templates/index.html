@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,656 +26,600 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f4f7f2; }
+
+        /* Dark Mode */
+        body.dark * { border-color: #334155 !important; }
+        body.dark .bg-white { background: #1e293b !important; }
+        body.dark header, body.dark footer { background: #052e16 !important; }
+        body.dark .shadow-lg { box-shadow: 0 10px 40px rgba(0,0,0,0.5) !important; }
+        body.dark .shadow-md { box-shadow: 0 4px 20px rgba(0,0,0,0.4) !important; }
+        body.dark .shadow-sm { box-shadow: 0 2px 10px rgba(0,0,0,0.3) !important; }
+        /* Dark Mode */
+        body.dark, .dark body, html.dark body {
+            background: #0f172a !important;
+            color: #e2e8f0 !important;
+        }
+        body.dark .bg-white, .dark body .bg-white { background-color: #1e293b !important; }
+        body.dark header, .dark body header, html.dark header { background-color: #052e16 !important; }
+        body.dark footer, .dark body footer, html.dark footer { background-color: #052e16 !important; }
+        body.dark .text-\[#155C1B\], .dark body .text-\[#155C1B\] { color: #86efac !important; }
+        body.dark .text-gray-500, .dark body .text-gray-500 { color: #94a3b8 !important; }
+        body.dark .text-gray-600, .dark body .text-gray-600 { color: #cbd5e1 !important; }
+        body.dark .text-gray-700, .dark body .text-gray-700 { color: #e2e8f0 !important; }
+        body.dark .text-gray-400, .dark body .text-gray-400 { color: #64748b !important; }
+        body.dark .text-green-100, .dark body .text-green-100 { color: #d1fae5 !important; }
+        body.dark .text-green-200, .dark body .text-green-200 { color: #a7f3d0 !important; }
+        body.dark .text-green-300, .dark body .text-green-300 { color: #6ee7b7 !important; }
+        body.dark .border-gray-100, .dark body .border-gray-100 { border-color: #334155 !important; }
+        body.dark .shadow-lg, .dark body .shadow-lg { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5) !important; }
+        body.dark .shadow-md, .dark body .shadow-md { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.5) !important; }
+        body.dark .shadow-sm, .dark body .shadow-sm { box-shadow: 0 1px 2px rgba(0,0,0,0.4) !important; }
+
+        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+        /* ── Scroll Reveal Animations ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.5, 0, 0, 1), transform 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.8s cubic-bezier(0.5, 0, 0, 1), transform 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.8s cubic-bezier(0.5, 0, 0, 1), transform 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .reveal-scale {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.6s cubic-bezier(0.5, 0, 0, 1), transform 0.6s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal-scale.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* ── Stagger Delays ── */
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+        .stagger-4 { transition-delay: 0.4s; }
+        .stagger-5 { transition-delay: 0.5s; }
+        .stagger-6 { transition-delay: 0.6s; }
+        .stagger-7 { transition-delay: 0.7s; }
+        .stagger-8 { transition-delay: 0.8s; }
+
+        /* ── Animated Gradient Text ── */
+        .gradient-text {
+            background: linear-gradient(135deg, #155C1B 0%, #73AA0F 50%, #155C1B 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 3s ease infinite;
+        }
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% center; }
+            50% { background-position: 100% center; }
+        }
+
+        /* ── Animated Underline ── */
+        .animated-underline {
+            position: relative;
+            display: inline-block;
+        }
+        .animated-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #155C1B, #73AA0F);
+            border-radius: 2px;
+            transition: width 0.4s ease;
+        }
+        .animated-underline.active::after {
+            width: 100%;
+        }
+
+        /* ── Floating Animation ── */
+        .float {
+            animation: float 3s ease-in-out infinite;
+        }
+        .float-delay-1 { animation-delay: 0.5s; }
+        .float-delay-2 { animation-delay: 1s; }
+        .float-delay-3 { animation-delay: 1.5s; }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* ── Pulse Animation ── */
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* ── Fade In Up ── */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        /* ── Counter Animation ── */
+        .counter {
+            transition: all 0.5s ease;
+        }
+
+        /* ── Shine Effect on Hover ── */
+        .shine-effect {
+            position: relative;
+            overflow: hidden;
+        }
+        .shine-effect::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        .shine-effect:hover::before {
+            left: 100%;
+        }
+
+        /* ── Card Hover Glow ── */
+        .card-glow {
+            transition: all 0.4s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .card-glow:hover {
+            box-shadow: 0 0 30px rgba(21, 92, 27, 0.2), 0 10px 40px rgba(21, 92, 27, 0.1);
+        }
+
+        /* ── Section Divider ── */
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #155C1B, #73AA0F, #155C1B, transparent);
+            background-size: 200% 100%;
+            animation: shimmer 3s linear infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        /* ── Nav Active Indicator ── */
+        .nav-indicator {
+            position: relative;
+        }
+        .nav-indicator::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: #73AA0F;
+            border-radius: 1px;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        .nav-indicator:hover::after,
+        .nav-indicator.active::after {
+            width: 80%;
+        }
+
+        /* ── Smooth Page Sections ── */
+        section {
+            scroll-margin-top: 80px;
+        }
+
+        /* ── Ripple Effect ── */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+        .ripple::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        .ripple:active::after {
+            width: 300px;
+            height: 300px;
+        }
+    </style>
 </head>
+<body>
 
-<body class="font-sans m-0 bg-[#f4f7f2] text-gray-800">
+    <!-- NAVBAR -->
+    {% include 'partials/navbar.html' %}
 
-    <!-- ══════════════════════════════════════════════════════════
-         WRAPPER — mobile: centred card / desktop: full width
-    ═══════════════════════════════════════════════════════════ -->
-    <div
-        class="w-full max-w-[480px] md:max-w-none mx-auto bg-white md:bg-transparent shadow-[0_0_30px_rgba(0,0,0,0.45)] md:shadow-none min-h-screen overflow-x-hidden">
+    <!-- HERO SECTION -->
+    <section id="hero" class="relative min-h-[500px] md:min-h-[600px] flex items-center overflow-hidden">
+        <!-- Background Image with Parallax -->
+        <div class="absolute inset-0" id="hero-bg">
+            <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80"
+                 alt="Desa Kedungwinangun"
+                 class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-r from-[#155C1B]/90 via-[#155C1B]/70 to-transparent"></div>
+        </div>
 
-        <!-- ── NAVBAR ─────────────────────────────────────────── -->
-        <nav
-            class="flex items-center gap-3 px-4 py-3 md:px-[5%] md:py-4 bg-[#0F5B21] text-white text-[11px] md:text-base font-semibold">
-            <img src="{{ url_for('static', filename='images/kebumen.png') }}" alt="Logo Desa" class="w-8 h-10 md:w-10 md:h-[50px] object-contain">
-            <div class="flex gap-2 md:gap-6 ml-auto">
-                {% for link in nav_links %}
-                <a href="{{ link.href }}"
-                   class="nav-a {% if link.active %}nav-active{% endif %} text-gray-200 no-underline transition-colors duration-300">
-                    {{ link.label }}
-                </a>
-                {% endfor %}
-            </div>
-        </nav>
+        <!-- Animated Decorative Elements -->
+        <div class="absolute top-20 left-10 w-20 h-20 bg-[#73AA0F]/20 rounded-full blur-2xl float"></div>
+        <div class="absolute bottom-20 right-20 w-32 h-32 bg-[#155C1B]/30 rounded-full blur-3xl float float-delay-1"></div>
+        <div class="absolute top-1/3 right-1/4 w-16 h-16 bg-[#73AA0F]/15 rounded-full blur-xl float float-delay-2"></div>
 
-        <!-- ── HERO SECTION ──────────────────────────────────── -->
-        <div class="hero-zoom relative overflow-hidden flex flex-col justify-center
-                    px-5 py-10 md:px-[5%] md:py-24 md:min-h-[55vh]
-                    bg-cover bg-center text-white"
-            style="background-image: linear-gradient(to bottom, rgba(15,91,33,0.55), rgba(0,0,0,0.82)),
-                    url('https://images.unsplash.com/photo-1433086966358-54859d0ed716?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');">
+        <!-- Content -->
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="max-w-2xl">
+                <span class="inline-block bg-[#73AA0F] text-white text-xs font-bold px-4 py-1.5 rounded-full mb-6 animate-fade-in-up">
+                    🏡 Selamat Datang di Desa Kami
+                </span>
+                <h1 class="text-4xl md:text-6xl font-extrabold text-white mb-4 leading-tight animate-fade-in-up" style="animation-delay: 0.1s;">
+                    {{ desa.nama }}
+                </h1>
+                <p class="text-xl md:text-2xl text-green-100 font-semibold mb-4 animate-fade-in-up" style="animation-delay: 0.2s;">
+                    {{ desa.tagline }}
+                </p>
+                <p class="text-green-200 text-base md:text-lg mb-4 leading-relaxed animate-fade-in-up" style="animation-delay: 0.3s;">
+                    {{ desa.deskripsi }}
+                </p>
 
-            <!-- Logo + Title -->
-            <div class="flex items-start md:items-center gap-3 md:gap-6 mb-5 md:mb-10">
-                <img src="{{ url_for('static', filename='images/kebumen.png') }}" alt="Logo Desa Besar"
-                    class="w-12 h-14 md:w-[100px] md:h-[120px] object-contain">
-                <div>
-                    <h1 class="text-lg md:text-5xl font-bold leading-tight mb-1 md:mb-3">{{ desa.nama }}</h1>
-                    <p class="text-xs md:text-2xl font-semibold">{{ desa.tagline }}</p>
-                    <p class="text-[10px] md:text-lg text-gray-300 mt-0.5 md:mt-2 max-w-[90%] md:max-w-lg">
-                        {{ desa.deskripsi }}
-                    </p>
+                <!-- Date & Time -->
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl px-4 py-3 border border-white/20 w-44">
+                        <div class="text-green-300 text-[10px] font-medium uppercase tracking-wider mb-1">Tanggal</div>
+                        <div id="current-date" class="text-white text-sm font-bold leading-tight">Memuat...</div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl px-4 py-3 border border-white/20 w-28 text-center">
+                        <div class="text-green-300 text-[10px] font-medium uppercase tracking-wider mb-1">Jam</div>
+                        <div id="current-time" class="text-white text-sm font-bold font-mono tracking-wider">Memuat...</div>
+                    </div>
+                    <div class="bg-white/10 backdrop-blur-sm rounded-xl px-3 py-3 border border-white/20 w-14 text-center">
+                        <div class="text-green-300 text-[10px] font-medium uppercase tracking-wider mb-1">Zona</div>
+                        <div class="text-white text-xs font-bold">WIB</div>
+                    </div>
                 </div>
-            </div>
 
-            <!-- CTA Buttons -->
-            <div class="flex gap-2.5 md:gap-5">
-                <a href="#"
-                    class="bg-[#73AA0F] hover:bg-[#63930b] text-white text-[11px] md:text-base font-bold
-                                   px-3 py-2 md:px-7 md:py-3.5 rounded-md md:rounded-lg no-underline text-center
-                                   transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0">
-                    Peta Interaktif
-                </a>
-                <a href="#"
-                    class="bg-[#185814] hover:bg-[#11420f] text-white text-[11px] md:text-base font-bold
-                                   px-3 py-2 md:px-7 md:py-3.5 rounded-md md:rounded-lg no-underline text-center
-                                   transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0">
-                    Layanan Surat
-                </a>
-            </div>
-
-            <!-- Dots -->
-            <div class="flex justify-center gap-1.5 md:gap-2 mt-7 md:mt-14">
-                <div id="dot-0"
-                    class="dot dot-active w-2 h-2 md:w-3 md:h-3 rounded-full bg-white transition-all duration-300">
-                </div>
-                <div id="dot-1" class="dot w-2 h-2 md:w-3 md:h-3 rounded-full bg-white/40 transition-all duration-300">
-                </div>
-                <div id="dot-2" class="dot w-2 h-2 md:w-3 md:h-3 rounded-full bg-white/40 transition-all duration-300">
+                <div class="flex flex-wrap gap-4">
+                    <a href="{{ url_for('public.layanan') }}" class="inline-flex items-center gap-2 bg-[#73AA0F] hover:bg-[#63930b] text-white font-bold px-6 py-3 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:-translate-y-0.5">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                        Layanan Desa
+                    </a>
+                    <a href="{{ url_for('public.kontak') }}" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-bold px-6 py-3 rounded-xl transition-all duration-300 backdrop-blur-sm border border-white/20">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                        </svg>
+                        Hubungi Kami
+                    </a>
                 </div>
             </div>
         </div>
+    </section>
 
-        <!-- ── CONTENT SECTION ───────────────────────────────── -->
-        <div class="orb-tr orb-bl relative overflow-hidden
-                    px-6 py-8
-                    md:w-[94%] md:max-w-[1600px] md:mx-auto
-                    md:mt-12 md:mb-14 md:px-[4%] md:py-16
-                    md:bg-gradient-to-br md:from-[#f5fdf0] md:via-white md:to-[#f0fdf4]
-                    md:rounded-[28px]
-                    md:shadow-[0_4px_6px_rgba(0,0,0,0.02),0_20px_60px_rgba(21,92,27,0.07),inset_0_1px_0_rgba(255,255,255,0.9)]
-                    md:border md:border-[rgba(21,92,27,0.07)]
-                    xl:w-[96%] xl:max-w-[1800px] xl:mt-16 xl:mb-20 xl:px-[4%] xl:py-20 xl:rounded-[32px]">
-
-            <!-- Deco corner (desktop) -->
-            <span class="deco-corner hidden md:block" aria-hidden="true"></span>
-
-            <!-- Deco dot cluster (desktop) -->
-            <div class="hidden md:flex gap-2 absolute bottom-10 left-[4%] pointer-events-none z-0" aria-hidden="true">
-                <span class="block w-2.5 h-2.5 rounded-full bg-[#73AA0F] opacity-[0.18]"></span>
-                <span class="block w-2.5 h-2.5 rounded-full bg-[#73AA0F] opacity-[0.10]"></span>
-                <span class="block w-2.5 h-2.5 rounded-full bg-[#73AA0F] opacity-[0.06]"></span>
-                <span class="block w-2.5 h-2.5 rounded-full bg-[#73AA0F] opacity-[0.04]"></span>
+        <!-- TENTANG KAMI SECTION -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="flex items-center justify-between mb-10">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-[#155C1B]">Tentang Kami</h2>
+                <p class="text-gray-500 mt-2">Kenali lebih dekat {{ desa.nama }}</p>
             </div>
+        </div>
 
-            <!-- ── TENTANG KAMI ─────────────────────────────── -->
-            <h2 class="title-underline reveal relative inline-flex items-center gap-3
-                        text-[#155C1B] text-2xl md:text-4xl xl:text-[44px]
-                        font-extrabold mb-11 md:mb-14">
-                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z" />
-                    <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12" />
-                </svg>
-                Tentang Kami
-            </h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <!-- Info Card -->
+            <div class="bg-gradient-to-br from-[#f0fdf4] to-white rounded-2xl p-8 md:p-10 border border-[#155C1B]/10 shadow-lg">
+                <h3 class="text-2xl font-bold text-[#155C1B] mb-6 flex items-center gap-3">
+                    <span class="w-10 h-10 rounded-xl bg-[#155C1B] flex items-center justify-center text-white">🏛️</span>
+                    Susunan Tata Kerja Pemerintahan
+                </h3>
+                <p class="text-gray-600 leading-relaxed mb-6">
+                    Struktur pemerintahan desa terdiri dari Kepala Desa sebagai pimpinan tertinggi
+                    penyelenggara pemerintahan dan pengelola keuangan, yang dalam tugasnya dibantu oleh
+                    unsur sekretariat serta unsur pelaksana teknis dan kewilayahan.
+                </p>
 
-            <!-- Two-column grid (stacked on mobile) -->
-            <div class="flex flex-col md:grid md:grid-cols-2 gap-9 md:gap-9 xl:gap-14 w-full">
-
-                <!-- Google Maps col -->
-                <div class="map-ring reveal flex flex-col min-w-0 h-full">
-                    <!-- Badge -->
-                    <div class="flex items-center gap-1.5 bg-[#155C1B] text-white text-xs md:text-sm
-                                font-bold px-4 py-2 rounded-t-[19px] tracking-wide">
-                        📍 Lokasi Desa
+                <!-- Stats -->
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="bg-white rounded-xl p-4 text-center shadow-sm border border-gray-100">
+                        <div class="text-3xl font-bold text-[#155C1B]">{{ desa.jumlah_dusun }}</div>
+                        <div class="text-xs text-gray-500 mt-1">Dusun</div>
                     </div>
-                    <!-- Map -->
-                    <div
-                        class="flex-1 overflow-hidden rounded-b-[18px] min-h-[200px] md:min-h-[440px] xl:min-h-[520px]">
-                        <iframe
-                            src="{{ desa.maps_embed_url }}"
-                            class="w-full h-full block min-h-[200px] md:min-h-[440px] xl:min-h-[520px]"
-                            style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade">
-                        </iframe>
+                    <div class="bg-white rounded-xl p-4 text-center shadow-sm border border-gray-100">
+                        <div class="text-3xl font-bold text-[#155C1B]">{{ desa.jumlah_kasi }}</div>
+                        <div class="text-xs text-gray-500 mt-1">Kasi</div>
+                    </div>
+                    <div class="bg-white rounded-xl p-4 text-center shadow-sm border border-gray-100">
+                        <div class="text-3xl font-bold text-[#155C1B]">{{ desa.jumlah_kepala_desa }}</div>
+                        <div class="text-xs text-gray-500 mt-1">Kades</div>
                     </div>
                 </div>
 
-                <!-- Text Content col -->
-                <div class="glass reveal flex flex-col justify-between min-w-0
-                            border border-white/80 border-l-[6px] border-l-[#155C1B]
-                            rounded-[20px] p-7 md:p-10 xl:p-14
-                            shadow-[0_15px_35px_rgba(21,92,27,0.05),inset_0_0_0_1px_rgba(255,255,255,0.5)]
-                            transition-all duration-500 hover:shadow-[0_20px_45px_rgba(21,92,27,0.1)]">
-
-                    <div>
-                        <h3
-                            class="text-[#155C1B] text-xl md:text-3xl xl:text-[34px] font-bold leading-snug mb-4 md:mb-6">
-                            Susunan Tata Kerja Pemerintahan
-                        </h3>
-
-                        <p class="text-[#2D582A] text-[13px] md:text-[15px] xl:text-[17px]
-                                  font-medium text-justify leading-relaxed md:leading-[1.85] mb-4 md:mb-6">
-                            Struktur pemerintahan desa terdiri dari Kepala Desa sebagai pimpinan tertinggi
-                            penyelenggara pemerintahan dan pengelola keuangan, yang dalam tugasnya dibantu oleh
-                            unsur sekretariat serta unsur pelaksana teknis dan kewilayahan. Unsur sekretariat
-                            dikoordinasikan oleh Sekretaris Desa bersama Kepala Urusan (Kaur) Tata Usaha dan
-                            Umum, Kaur Keuangan, serta Kaur Perencanaan. Sementara itu, unsur pelaksana
-                            dijalankan oleh para Kepala Seksi (Kasi) dan dibantu oleh Kepala Dusun (Kadus).
-                        </p>
-
-                        <p class="text-[#2D582A] text-[13px] md:text-[15px] xl:text-[17px]
-                                  font-medium leading-relaxed mb-4 md:mb-6">
-                            Desa {{ desa.nama }} terbagi menjadi beberapa wilayah dusun utama, meliputi:
-                        </p>
-
-                        <!-- Dusun Divider -->
-                        <div class="flex items-center gap-2.5 my-4">
-                            <div class="flex-1 h-px bg-[#D7E5CD]"></div>
-                            <span
-                                class="text-[10px] md:text-xs font-bold tracking-widest uppercase text-[#5B8A4E] whitespace-nowrap">
-                                Wilayah Dusun
-                            </span>
-                            <div class="flex-1 h-px bg-[#D7E5CD]"></div>
-                        </div>
-
-                        <!-- Dusun Pills — rendered from Flask data -->
-                        <ul class="dusun-list grid grid-cols-2 md:grid-cols-3 gap-2.5 md:gap-3 list-none p-0 mb-5 md:mb-6">
-                            {% for dusun in desa.dusun %}
-                            <li class="dusun-pill flex items-center gap-2 bg-[#F4FAF0] text-[#155C1B]
-                                       text-[11px] md:text-sm xl:text-[15px] font-semibold
-                                       px-3 py-2 md:px-3.5 md:py-2.5 xl:px-4 xl:py-3
-                                       rounded-[10px] border border-[rgba(21,92,27,0.06)]
-                                       transition-all duration-300 cursor-default"
-                                style="--delay: {{ dusun.delay }}">
-                                <span>📍</span> {{ dusun.nama }}
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-
-                    <!-- Stat Strip -->
-                    <div class="reveal grid grid-cols-3 gap-3 md:gap-4 mt-4">
-                        <div class="stat-bar relative flex flex-col items-center justify-center overflow-hidden
-                                    bg-white/70 backdrop-blur-md border border-white/80 rounded-2xl
-                                    py-4 px-2 md:py-5
-                                    shadow-[0_8px_20px_rgba(15,91,33,0.04)]
-                                    transition-all duration-400 hover:-translate-y-1
-                                    hover:shadow-[0_12px_28px_rgba(15,91,33,0.1)]">
-                            <span
-                                class="block text-[#155C1B] text-2xl md:text-3xl xl:text-4xl font-bold leading-none">{{ desa.jumlah_dusun }}</span>
-                            <span
-                                class="block text-[#5B8A4E] text-[9px] md:text-[11px] font-semibold mt-1 tracking-wide">Dusun</span>
-                        </div>
-                        <div class="stat-bar relative flex flex-col items-center justify-center overflow-hidden
-                                    bg-white/70 backdrop-blur-md border border-white/80 rounded-2xl
-                                    py-4 px-2 md:py-5
-                                    shadow-[0_8px_20px_rgba(15,91,33,0.04)]
-                                    transition-all duration-400 hover:-translate-y-1
-                                    hover:shadow-[0_12px_28px_rgba(15,91,33,0.1)]">
-                            <span
-                                class="block text-[#155C1B] text-2xl md:text-3xl xl:text-4xl font-bold leading-none">{{ desa.jumlah_kasi }}</span>
-                            <span
-                                class="block text-[#5B8A4E] text-[9px] md:text-[11px] font-semibold mt-1 tracking-wide">Kasi
-                                Pelaksana</span>
-                        </div>
-                        <div class="stat-bar relative flex flex-col items-center justify-center overflow-hidden
-                                    bg-white/70 backdrop-blur-md border border-white/80 rounded-2xl
-                                    py-4 px-2 md:py-5
-                                    shadow-[0_8px_20px_rgba(15,91,33,0.04)]
-                                    transition-all duration-400 hover:-translate-y-1
-                                    hover:shadow-[0_12px_28px_rgba(15,91,33,0.1)]">
-                            <span
-                                class="block text-[#155C1B] text-2xl md:text-3xl xl:text-4xl font-bold leading-none">{{ desa.jumlah_kepala_desa }}</span>
-                            <span
-                                class="block text-[#5B8A4E] text-[9px] md:text-[11px] font-semibold mt-1 tracking-wide">Kepala
-                                Desa</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- ── BERITA ────────────────────────────────────── -->
-            <h2 class="title-underline reveal relative inline-flex items-center gap-3
-                        text-[#155C1B] text-2xl md:text-4xl xl:text-[44px]
-                        font-extrabold mt-16 md:mt-20 mb-10">
-                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/>
-                    <path d="M18 14h-8M15 18h-5M10 6h8v4h-8V6Z"/>
-                </svg>
-                Berita Desa
-            </h2>
-
-            <!-- ══ FEATURED CAROUSEL ══════════════════════════════════ -->
-            {% if featured_list %}
-            <div class="relative mb-8" id="featured-carousel">
-                <!-- Carousel Container -->
-                <div class="overflow-hidden rounded-xl">
-                    <div class="flex transition-transform duration-500 ease-out" id="carousel-track" style="width: {{ featured_list|length * 100 }}%;">
-                        {% for feat in featured_list %}
-                        <div class="w-full shrink-0" style="width: {{ 100 / featured_list|length }}%;">
-                            <div class="news-card md:flex">
-                                <!-- Thumbnail -->
-                                <div class="news-thumb md:w-[45%] shrink-0" style="height:280px; min-height:280px;">
-                                    <span class="featured-ribbon">⭐ Unggulan</span>
-                                    <img
-                                        src="{{ feat.gambar_url }}"
-                                        alt="{{ feat.gambar_alt }}"
-                                        style="height:280px;">
-                                </div>
-
-                                <!-- Body -->
-                                <div class="flex flex-col justify-between p-6 md:p-8 flex-1">
-                                    <div>
-                                        <!-- Meta row -->
-                                        <div class="flex flex-wrap items-center gap-2 mb-3">
-                                            <span class="news-badge {{ feat.badge_class }}">{{ feat.kategori_icon }} {{ feat.kategori }}</span>
-                                            <span class="text-xs text-gray-400 font-medium">📅 {{ feat.tanggal }}</span>
-                                            <span class="text-xs text-gray-300">•</span>
-                                            <span class="text-xs text-gray-400 font-medium">👁 {{ feat.views }} dibaca</span>
-                                        </div>
-
-                                        <!-- Title -->
-                                        <h3 class="text-[#155C1B] text-xl md:text-2xl font-extrabold leading-snug mb-3">
-                                            {{ feat.judul }}
-                                        </h3>
-
-                                        <!-- Excerpt -->
-                                        <p class="text-gray-500 text-[13px] md:text-sm leading-relaxed mb-5 line-clamp-3">
-                                            {{ feat.excerpt }}
-                                        </p>
-                                    </div>
-
-                                    <!-- Footer -->
-                                    <div class="flex items-center justify-between flex-wrap gap-3 pt-4 border-t border-gray-100">
-                                        <div class="flex items-center gap-2">
-                                            <div class="w-7 h-7 rounded-full bg-[#155C1B] flex items-center justify-center text-white text-xs font-bold">KD</div>
-                                            <span class="text-xs text-gray-500 font-medium">{{ feat.penulis }}</span>
-                                        </div>
-                                        <a href="{{ url_for('public.detail_berita', berita_id=feat.id) }}"
-                                           class="news-readmore"
-                                           aria-label="Baca selengkapnya: {{ feat.judul }}">
-                                            Baca Selengkapnya
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                                                <path d="M5 12h14M12 5l7 7-7 7"/>
-                                            </svg>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                <!-- Daftarusun -->
+                <div class="mt-8">
+                    <h4 class="font-bold text-[#155C1B] mb-4">Wilayah Dawis</h4>
+                    <div class="flex flex-wrap gap-2">
+                        {% for dusun in desa.dusun %}
+                        <span class="bg-[#155C1B]/10 text-[#155C1B] px-4 py-2 rounded-full text-sm font-medium">
+                            📍 {{ dusun.nama }}
+                        </span>
                         {% endfor %}
                     </div>
                 </div>
-
-                <!-- Carousel Navigation Dots -->
-                {% if featured_list|length > 1 %}
-                <div class="flex justify-center gap-2 mt-4">
-                    {% for i in range(featured_list|length) %}
-                    <button
-                        class="carousel-dot w-3 h-3 rounded-full transition-all {% if loop.first %}bg-[#155C1B]{% else %}bg-gray-300{% endif %}"
-                        data-index="{{ i }}"
-                        aria-label="Slide {{ i + 1 }}">
-                    </button>
-                    {% endfor %}
-                </div>
-
-                <!-- Carousel Navigation Arrows -->
-                <button class="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center text-[#155C1B] font-bold text-xl carousel-prev" id="carousel-prev">
-                    ‹
-                </button>
-                <button class="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center text-[#155C1B] font-bold text-xl carousel-next" id="carousel-next">
-                    ›
-                </button>
-                {% endif %}
-            </div>
-            {% endif %}
-
-            <!-- Thin divider -->
-            <div class="news-divider"></div>
-
-            <!-- ══ NEWS GRID ══════════════════════════════════ -->
-            {% if berita_list %}
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 mb-10" id="news-grid">
-                {% for berita in berita_list %}
-                <article class="news-card reveal flex flex-col"
-                         style="transition-delay: {{ loop.index * 0.07 }}s">
-                    <div class="news-thumb" style="height:180px;">
-                        <img
-                            src="{{ berita.gambar_url }}"
-                            alt="{{ berita.gambar_alt }}"
-                            style="height:180px;">
-                    </div>
-                    <div class="flex flex-col flex-1 p-5">
-                        <div class="flex flex-wrap items-center gap-2 mb-2.5">
-                            <span class="news-badge {{ berita.badge_class }}">{{ berita.kategori_icon }} {{ berita.kategori }}</span>
-                            {% if berita.unggulan == 1 %}
-                            <span style="background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 600;">⭐</span>
-                            {% endif %}
-                            <span class="text-[10px] text-gray-400 font-medium">{{ berita.tanggal }}</span>
-                        </div>
-                        <h3 class="text-[#155C1B] text-base font-bold leading-snug mb-2 flex-1">
-                            {{ berita.judul }}
-                        </h3>
-                        <p class="text-gray-500 text-xs leading-relaxed mb-4 line-clamp-2">
-                            {{ berita.excerpt }}
-                        </p>
-                        <div class="flex items-center justify-between mt-auto pt-3 border-t border-gray-100">
-                            <span class="text-[10px] text-gray-400">👁 {{ berita.views }} dibaca</span>
-                            <a href="{{ url_for('public.detail_berita', berita_id=berita.id) }}"
-                               class="news-readmore text-xs"
-                               aria-label="Baca: {{ berita.judul }}">
-                                Baca
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </article>
-                {% endfor %}
-            </div>
-            {% endif %}
-
-            <!-- Lihat Semua Berita CTA -->
-            <div class="reveal flex justify-center mb-6">
-                <a href="{{ url_for('public.berita') }}" class="btn-all-news" id="btn-lihat-semua-berita">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                        <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/>
-                        <path d="M18 14h-8M15 18h-5M10 6h8v4h-8V6Z"/>
-                    </svg>
-                    Lihat Semua Berita
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                </a>
             </div>
 
-            <!-- ── POTENSI DESA ───────────────────────────────── -->
-            <h2 class="title-underline reveal relative inline-flex items-center gap-3
-                        text-[#155C1B] text-2xl md:text-4xl xl:text-[44px]
-                        font-extrabold mt-16 md:mt-20 mb-10">
-                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                    <path d="M2 17l10 5 10-5"/>
-                    <path d="M2 12l10 5 10-5"/>
+            <!-- Maps -->
+            <div class="rounded-2xl overflow-hidden shadow-lg border border-[#155C1B]/10 h-[400px] lg:h-auto">
+                <iframe
+                    src="{{ desa.maps_embed_url }}"
+                    class="w-full h-full min-h-[400px]"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEWS SECTION -->
+    <section id="berita" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <!-- Section Header -->
+        <div class="flex items-center justify-between mb-10">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-[#155C1B] animated-underline reveal">Berita Terbaru</h2>
+                <p class="text-gray-500 mt-2 reveal stagger-1">Informasi dan kegiatan terkini dari desa kami</p>
+            </div>
+            <a href="{{ url_for('public.berita') }}" class="hidden sm:inline-flex items-center gap-2 text-[#155C1B] font-semibold hover:text-[#73AA0F] transition-all duration-300 hover:-translate-x-1 reveal stagger-2">
+                Lihat Semua
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                 </svg>
-                Potensi Desa
-            </h2>
+            </a>
+        </div>
+
+        <!-- Featured News Card -->
+        {% if featured_list %}
+        <a href="{{ url_for('public.detail_berita', berita_id=featured_list[0].id) }}" class="block group mb-10 reveal-scale">
+            <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-500 card-glow shine-effect">
+                <div class="md:flex">
+                    <div class="md:w-1/2 relative overflow-hidden">
+                        <img src="{{ featured_list[0].gambar_url }}" alt="{{ featured_list[0].gambar_alt }}"
+                             class="w-full h-64 md:h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <span class="absolute top-4 left-4 bg-[#73AA0F] text-white text-xs font-bold px-3 py-1 rounded-full pulse">
+                            ⭐ Unggulan
+                        </span>
+                    </div>
+                    <div class="md:w-1/2 p-6 md:p-10 flex flex-col justify-center">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="bg-[#f0fdf4] text-[#155C1B] text-xs font-semibold px-3 py-1 rounded-full">
+                                {{ featured_list[0].kategori_icon }} {{ featured_list[0].kategori }}
+                            </span>
+                            <span class="text-gray-400 text-sm">{{ featured_list[0].tanggal }}</span>
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-bold text-[#155C1B] mb-4 group-hover:text-[#73AA0F] transition-colors duration-300">
+                            {{ featured_list[0].judul }}
+                        </h3>
+                        <p class="text-gray-600 line-clamp-3 mb-6">
+                            {{ featured_list[0].excerpt }}
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 rounded-full bg-[#155C1B] flex items-center justify-center text-white text-xs font-bold">KD</div>
+                                <span class="text-sm text-gray-500">{{ featured_list[0].penulis }}</span>
+                            </div>
+                            <span class="text-[#155C1B] font-semibold flex items-center gap-1 group-hover:gap-3 transition-all duration-300">
+                                Baca Selengkapnya
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% endif %}
+
+        <!-- News Grid -->
+        {% if berita_list %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+            {% for berita in berita_list[:6] %}
+            <a href="{ url_for('public.detail_berita', berita_id=berita.id) %}" class="group bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-xl transition-all duration-300 reveal stagger-{{ loop.index }}">
+                <div class="relative overflow-hidden h-48">
+                    <img src="{{ berita.gambar_url }}" alt="{{ berita.gambar_alt }}"
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    {% if berita.unggulan == 1 %}
+                    <span class="absolute top-3 left-3 bg-yellow-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">⭐</span>
+                    {% endif %}
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                <div class="p-5">
+                    <div class="flex items-center gap-2 mb-3">
+                        <span class="bg-[#f0fdf4] text-[#155C1B] text-xs font-semibold px-2 py-0.5 rounded-full">
+                            {{ berita.kategori_icon }} {{ berita.kategori }}
+                        </span>
+                        <span class="text-gray-400 text-xs">{{ berita.tanggal }}</span>
+                    </div>
+                    <h3 class="font-bold text-[#155C1B] mb-2 line-clamp-2 group-hover:text-[#73AA0F] transition-colors duration-300">
+                        {{ berita.judul }}
+                    </h3>
+                    <p class="text-gray-500 text-sm line-clamp-2 mb-4">
+                        {{ berita.excerpt }}
+                    </p>
+                    <div class="flex items-center justify-between text-xs text-gray-400">
+                        <span>👁 {{ berita.views }} dibaca</span>
+                        <span class="text-[#155C1B] font-semibold group-hover:translate-x-1 transition-transform duration-300">Baca →</span>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="bg-white rounded-2xl p-12 text-center">
+            <div class="text-6xl mb-4">📰</div>
+            <h3 class="text-xl font-bold text-gray-700 mb-2">Belum Ada Berita</h3>
+            <p class="text-gray-500">Berita akan segera ditambahkan. Pantau terus!</p>
+        </div>
+        {% endif %}
+
+        <!-- Mobile View All -->
+        <div class="sm:hidden mt-6 text-center">
+            <a href="{{ url_for('public.berita') }}" class="inline-flex items-center gap-2 text-[#155C1B] font-semibold">
+                Lihat Semua Berita
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+
+    <!-- POTENSI SECTION -->
+    <section id="potensi" class="bg-gradient-to-br from-[#f0fdf4] to-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-[#155C1B] animated-underline reveal">Potensi Desa</h2>
+                <p class="text-gray-500 mt-3 max-w-2xl mx-auto reveal stagger-1">Kenali berbagai potensi dan kegiatan menarik yang ada di {{ desa.nama }}</p>
+            </div>
 
             {% set potensi_list = [
-                {
-                    'nama': 'Pertanian Padi Organik',
-                    'kategori': 'Pertanian',
-                    'icon': '🌾',
-                    'gambar_url': 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-                    'deskripsi': 'Desa Kedungwinangun memiliki lahan pertanian padi organik seluas 150 hektar yang dikelola secara tradisional dengan pupuk alami.',
-                    'lokasi': 'Dusun Kedung',
-                    'link': '#'
-                },
-                {
-                    'nama': 'Kerajinan Bambu',
-                    'kategori': 'Kerajinan',
-                    'icon': '🎋',
-                    'gambar_url': 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-                    'deskripsi': 'Pengrajin bamboo lokal menghasilkan berbagai kerajinan tangan seperti anyaman, tempat duduk, dan dekorasi rumah.',
-                    'lokasi': 'Dusun Winangun',
-                    'link': '#'
-                },
-                {
-                    'nama': 'Wisata Sungai Bodri',
-                    'kategori': 'Pariwisata',
-                    'icon': '🏞️',
-                    'gambar_url': 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-                    'deskripsi': 'Sungai Bodri menawarkan pemandangan alam yang asri dengan fasilitas mandi bola dan spot foto instagramable.',
-                    'lokasi': 'Dusun Bodri',
-                    'link': '#'
-                },
-                {
-                    'nama': 'Budidaya Ikan Lele',
-                    'kategori': 'Perikanan',
-                    'icon': '🐟',
-                    'gambar_url': 'https://images.unsplash.com/photo-1524704654690-b56c05c78a00?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-                    'deskripsi': 'Kolam ikan lele dengan sistem bioflok menghasilkan produksi tinggi dan ramah lingkungan.',
-                    'lokasi': 'Dusun Winangun',
-                    'link': '#'
-                },
-                {
-                    'nama': 'Terasering Padi',
-                    'kategori': 'Pertanian',
-                    'icon': '🌿',
-                    'gambar_url': 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-                    'deskripsi': 'Hamparan sawah terasering yang membentang di kaki bukit menciptakan pemandangan spektakuler.',
-                    'lokasi': 'Dusun Krajan',
-                    'link': '#'
-                },
-                {
-                    'nama': 'Wedang Jahe Khas Desa',
-                    'kategori': 'Kuliner',
-                    'icon': '☕',
-                    'gambar_url': 'https://images.unsplash.com/photo-1544787219-7f47ccb76574?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-                    'deskripsi': 'Minuman herbal tradisional dari jahe, serai, dan rempah pilihan yang hangat dan menyehatkan.',
-                    'lokasi': 'Dusun Kedung',
-                    'link': '#'
-                },
-                {
-                    'nama': 'Batik Tulis Kedungwinangun',
-                    'kategori': 'Kerajinan',
-                    'icon': '🧵',
-                    'gambar_url': 'https://images.unsplash.com/photo-1618220179428-22790b461013?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-                    'deskripsi': 'Batik tulis dengan motif khas daerah yang dihasilkan oleh para pengrajin batik desa.',
-                    'lokasi': 'Dusun Winangun',
-                    'link': '#'
-                },
-                {
-                    'nama': 'Hutan Kesejarahan',
-                    'kategori': 'Pariwisata',
-                    'icon': '🌳',
-                    'gambar_url': 'https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
-                    'deskripsi': 'Hutan bekas penebangan ilegal yang kini dikelola menjadi kawasan konservasi dan edukasi lingkungan.',
-                    'lokasi': 'Dusun Bodri',
-                    'link': '#'
-                }
+                {'nama': 'Pertanian Padi Organik', 'kategori': 'Pertanian', 'icon': '🌾', 'gambar_url': 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', 'deskripsi': 'Lahan pertanian padi organik seluas 150 hektar yang dikelola secara tradisional dengan pupuk alami.'},
+                {'nama': 'Kerajinan Bambu', 'kategori': 'Kerajinan', 'icon': '🎋', 'gambar_url': 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', 'deskripsi': 'Pengrajin bamboo lokal menghasilkan berbagai kerajinan tangan seperti anyaman dan dekorasi rumah.'},
+                {'nama': 'Wisata Sungai Bodri', 'kategori': 'Pariwisata', 'icon': '🏞️', 'gambar_url': 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', 'deskripsi': 'Sungai Bodri menawarkan pemandangan alam yang asri dengan fasilitas mandi bola dan spot foto.'},
+                {'nama': 'Budidaya Ikan Lele', 'kategori': 'Perikanan', 'icon': '🐟', 'gambar_url': 'https://images.unsplash.com/photo-1524704654690-b56c05c78a00?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80', 'deskripsi': 'Kolam ikan lele dengan sistem bioflok menghasilkan produksi tinggi dan ramah lingkungan.'}
             ] %}
 
-            <!-- Potensi Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-6 mb-10">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 {% for potensi in potensi_list %}
-                <div class="reveal group relative flex flex-col overflow-hidden
-                            bg-gradient-to-br from-white to-[#f0fdf4]
-                            rounded-2xl border border-[rgba(21,92,27,0.08)]
-                            shadow-[0_4px_15px_rgba(21,92,27,0.05)]
-                            transition-all duration-400 hover:-translate-y-1.5 hover:shadow-[0_15px_35px_rgba(21,92,27,0.12)]
-                            hover:border-[rgba(21,92,27,0.15)]"
-                     style="transition-delay: {{ loop.index * 0.06 }}s">
-                    <!-- Icon Badge -->
-                    <div class="absolute top-4 right-4 w-12 h-12 rounded-xl bg-[#155C1B]/08 flex items-center justify-center
-                                group-hover:bg-[#155C1B] transition-all duration-400 group-hover:scale-110">
-                        <span class="text-2xl group-hover:scale-110 transition-transform duration-400">{{ potensi.icon }}</span>
-                    </div>
-
-                    <!-- Image -->
-                    <div class="h-40 overflow-hidden rounded-t-2xl">
-                        <img src="{{ potensi.gambar_url }}"
-                             alt="{{ potensi.nama }}"
-                             class="w-full h-full object-cover
-                                    transition-transform duration-500 group-hover:scale-110">
-                    </div>
-
-                    <!-- Content -->
-                    <div class="flex flex-col flex-1 p-5">
-                        <span class="inline-flex items-center gap-1.5 mb-2 text-[10px] font-bold uppercase tracking-wider
-                                     text-[#73AA0F] bg-[#f0fdf4] px-2.5 py-1 rounded-full w-fit">
-                            {{ potensi.kategori }}
-                        </span>
-                        <h3 class="text-[#155C1B] text-base font-bold leading-snug mb-2">
-                            {{ potensi.nama }}
-                        </h3>
-                        <p class="text-gray-500 text-xs leading-relaxed flex-1 line-clamp-3">
-                            {{ potensi.deskripsi }}
-                        </p>
-
-                        <!-- Footer -->
-                        <div class="flex items-center justify-between mt-4 pt-3 border-t border-gray-100">
-                            <span class="text-[10px] text-gray-400 font-medium flex items-center gap-1">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                    <circle cx="12" cy="10" r="3"/>
-                                </svg>
-                                {{ potensi.lokasi }}
-                            </span>
-                            {% if potensi.link %}
-                            <a href="{{ potensi.link }}"
-                               class="text-[10px] font-semibold text-[#155C1B] hover:text-[#73AA0F]
-                                      transition-colors duration-200 flex items-center gap-1">
-                                Detail
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                                </svg>
-                            </a>
-                            {% endif %}
+                <div class="group bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-xl transition-all duration-500 reveal stagger-{{ loop.index }} card-glow shine-effect">
+                    <div class="relative h-40 overflow-hidden">
+                        <img src="{{ potensi.gambar_url }}" alt="{{ potensi.nama }}"
+                             class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                        <div class="absolute top-3 right-3 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-xl shadow-lg group-hover:scale-110 transition-transform duration-300 float">
+                            {{ potensi.icon }}
                         </div>
+                    </div>
+                    <div class="p-5">
+                        <span class="text-[#73AA0F] text-xs font-bold uppercase tracking-wider">{{ potensi.kategori }}</span>
+                        <h3 class="font-bold text-[#155C1B] mt-2 mb-2 group-hover:text-[#73AA0F] transition-colors duration-300">{{ potensi.nama }}</h3>
+                        <p class="text-gray-500 text-sm line-clamp-3">{{ potensi.deskripsi }}</p>
                     </div>
                 </div>
                 {% endfor %}
             </div>
+        </div>
+    </section>
 
-            <!-- Empty State (if no potensi) -->
-            {% if not potensi_list %}
-            <div class="flex flex-col items-center justify-center py-16 text-center">
-                <div class="w-20 h-20 rounded-full bg-[#f0fdf4] flex items-center justify-center mb-4">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#155C1B" stroke-width="1.5">
-                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
-                        <path d="M2 17l10 5 10-5"/>
-                        <path d="M2 12l10 5 10-5"/>
-                    </svg>
-                </div>
-                <h3 class="text-[#155C1B] text-lg font-bold mb-2">Potensi Sedang Disiapkan</h3>
-                <p class="text-gray-500 text-sm max-w-sm">
-                    Informasi potensi desa akan segera hadir. Stay tuned untuk mengetahui lebih lanjut tentang potensi {{ desa.nama }}.
-                </p>
+    <!-- GALERI SECTION -->
+    {% if galeri_list %}
+    <section id="galeri" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="flex items-center justify-between mb-10">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-extrabold text-[#155C1B] animated-underline reveal">Galeri</h2>
+                <p class="text-gray-500 mt-2 reveal stagger-1">Dokumentasi kegiatan dan potensi desa</p>
             </div>
-            {% endif %}
-
-            <!-- ── GALERI DESA ──────────────────────────────── -->
-            <h2 class="title-underline reveal relative inline-flex items-center gap-3
-                        text-[#155C1B] text-2xl md:text-4xl xl:text-[44px]
-                        font-extrabold mt-16 md:mt-20 mb-10">
-                <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                    <circle cx="8.5" cy="8.5" r="1.5"/>
-                    <polyline points="21 15 16 10 5 21"/>
+            <a href="{{ url_for('public.galeri') }}" class="hidden sm:inline-flex items-center gap-2 text-[#155C1B] font-semibold hover:text-[#73AA0F] transition-all duration-300 hover:-translate-x-1 reveal stagger-2">
+                Lihat Semua
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                 </svg>
-                Galeri Desa
-            </h2>
+            </a>
+        </div>
 
-            <!-- Galeri Grid -->
-            {% if galeri_list %}
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-10">
-                {% for foto in galeri_list %}
-                <div class="reveal group relative overflow-hidden rounded-xl aspect-square cursor-pointer"
-                     style="transition-delay: {{ loop.index * 0.05 }}s"
-                     onclick="openLightbox('{{ foto.gambar_url }}', '{{ foto.judul }}')">
-                    <img src="{{ foto.gambar_url }}"
-                         alt="{{ foto.gambar_alt or foto.judul }}"
-                         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div class="absolute bottom-3 left-3 right-3">
-                            <p class="text-white text-sm font-semibold truncate">{{ foto.judul }}</p>
-                            <span class="text-white/80 text-xs">{{ foto.kategori }}</span>
-                        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {% for foto in galeri_list[:8] %}
+            <div class="group relative aspect-square overflow-hidden rounded-xl cursor-pointer reveal stagger-{{ loop.index }} shine-effect"
+                 onclick="openLightbox('{{ foto.gambar_url }}', '{{ foto.judul }}')">
+                <img src="{{ foto.gambar_url }}" alt="{{ foto.gambar_alt or foto.judul }}"
+                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div class="absolute bottom-3 left-3 right-3">
+                        <p class="text-white text-sm font-semibold truncate">{{ foto.judul }}</p>
+                    </div>
+                    <div class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/>
+                        </svg>
                     </div>
                 </div>
-                {% endfor %}
             </div>
-
-            <!-- Lihat Semua Galeri -->
-            <div class="reveal flex justify-center mb-6">
-                <a href="{{ url_for('public.galeri') }}" class="btn-all-news">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                        <circle cx="8.5" cy="8.5" r="1.5"/>
-                        <polyline points="21 15 16 10 5 21"/>
-                    </svg>
-                    Lihat Semua Galeri
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <path d="M5 12h14M12 5l7 7-7 7"/>
-                    </svg>
-                </a>
-            </div>
-            {% else %}
-            <!-- Empty State -->
-            <div class="flex flex-col items-center justify-center py-16 text-center bg-[#f0fdf4] rounded-2xl mb-10">
-                <div class="w-20 h-20 rounded-full bg-white flex items-center justify-center mb-4 shadow-sm">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#155C1B" stroke-width="1.5">
-                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                        <circle cx="8.5" cy="8.5" r="1.5"/>
-                        <polyline points="21 15 16 10 5 21"/>
-                    </svg>
-                </div>
-                <h3 class="text-[#155C1B] text-lg font-bold mb-2">Galeri Belum Tersedia</h3>
-                <p class="text-gray-500 text-sm max-w-sm">
-                    Foto galeri akan segera ditambahkan. Pantau terus untuk melihat kegiatan dan potensi desa kami.
-                </p>
-            </div>
-            {% endif %}
-
-        </div><!-- /content-section -->
-    </div><!-- /wrapper -->
-
-    <!-- Lightbox Modal -->
-    <div id="lightbox" class="fixed inset-0 bg-black/90 z-[200] hidden items-center justify-center p-4" onclick="closeLightbox()">
-        <button class="absolute top-4 right-4 text-white text-3xl hover:text-gray-300 transition-colors" onclick="closeLightbox()">×</button>
-        <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[90vh] object-contain rounded-lg">
-        <p id="lightbox-caption" class="absolute bottom-6 left-0 right-0 text-center text-white text-lg font-semibold"></p>
-    </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
 
     <!-- FOOTER -->
-    <footer class="bg-[#0F5B21] text-white">
-        <div class="w-full max-w-[480px] md:max-w-none mx-auto px-6 py-12 md:px-[5%]">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-16 mb-10">
+    <footer class="bg-[#155C1B] text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
                 <!-- Brand -->
                 <div>
-                    <div class="flex items-center gap-3 mb-5">
-                        <img src="{{ url_for('static', filename='images/kebumen.png') }}" alt="Logo" class="w-10 h-12 md:w-12 md:h-14">
+                    <div class="flex items-center gap-3 mb-6">
+                        <img src="{{ url_for('static', filename='images/kebumen.png') }}" alt="Logo" class="h-12 w-auto">
                         <div>
-                            <h3 class="font-bold text-lg md:text-xl">{{ desa.nama }}</h3>
-                            <p class="text-green-300 text-xs md:text-sm">{{ desa.tagline }}</p>
+                            <h3 class="font-bold text-xl">{{ desa.nama }}</h3>
+                            <p class="text-green-300 text-sm">{{ desa.tagline }}</p>
                         </div>
                     </div>
-                    <p class="text-green-200 text-sm leading-relaxed">{{ desa.deskripsi }}</p>
+                    <p class="text-green-200 leading-relaxed">{{ desa.deskripsi }}</p>
 
-                    <!-- Social Icons -->
-                    <div class="flex gap-3 mt-5">
+                    <!-- Social -->
+                    <div class="flex gap-3 mt-6">
                         {% if config.sosial_facebook %}
-                        <a href="https://facebook.com/{{ config.sosial_facebook }}" target="_blank" class="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
+                        <a href="https://facebook.com/{{ config.sosial_facebook }}" target="_blank" class="w-10 h-10 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
                             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                         </a>
                         {% endif %}
                         {% if config.sosial_instagram %}
-                        <a href="https://instagram.com/{{ config.sosial_instagram }}" target="_blank" class="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
+                        <a href="https://instagram.com/{{ config.sosial_instagram }}" target="_blank" class="w-10 h-10 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
                             <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                        </a>
-                        {% endif %}
-                        {% if config.sosial_twitter %}
-                        <a href="https://twitter.com/{{ config.sosial_twitter }}" target="_blank" class="w-9 h-9 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                         </a>
                         {% endif %}
                     </div>
@@ -684,42 +627,36 @@
 
                 <!-- Quick Links -->
                 <div>
-                    <h4 class="font-bold mb-5 text-green-300 uppercase text-xs tracking-wider">Navigasi</h4>
+                    <h4 class="font-bold text-lg mb-6">Navigasi</h4>
                     <ul class="space-y-3">
-                        <li><a href="{{ url_for('public.index') }}" class="text-green-100 hover:text-white transition-colors text-sm flex items-center gap-2"><span class="text-green-400">›</span> Beranda</a></li>
-                        <li><a href="{{ url_for('public.layanan') }}" class="text-green-100 hover:text-white transition-colors text-sm flex items-center gap-2"><span class="text-green-400">›</span> Layanan</a></li>
-                        <li><a href="{{ url_for('public.surat_info') }}" class="text-green-100 hover:text-white transition-colors text-sm flex items-center gap-2"><span class="text-green-400">›</span> Surat</a></li>
-                        <li><a href="{{ url_for('public.berita') }}" class="text-green-100 hover:text-white transition-colors text-sm flex items-center gap-2"><span class="text-green-400">›</span> Berita</a></li>
-                        <li><a href="{{ url_for('public.kontak') }}" class="text-green-100 hover:text-white transition-colors text-sm flex items-center gap-2"><span class="text-green-400">›</span> Kontak</a></li>
+                        <li><a href="{{ url_for('public.index') }}" class="text-green-100 hover:text-white transition-colors flex items-center gap-2"><span>›</span> Beranda</a></li>
+                        <li><a href="{{ url_for('public.layanan') }}" class="text-green-100 hover:text-white transition-colors flex items-center gap-2"><span>›</span> Layanan Surat</a></li>
+                        <li><a href="{{ url_for('public.berita') }}" class="text-green-100 hover:text-white transition-colors flex items-center gap-2"><span>›</span> Berita</a></li>
+                        <li><a href="{{ url_for('public.galeri') }}" class="text-green-100 hover:text-white transition-colors flex items-center gap-2"><span>›</span> Galeri</a></li>
+                        <li><a href="{{ url_for('public.kontak') }}" class="text-green-100 hover:text-white transition-colors flex items-center gap-2"><span>›</span> Kontak</a></li>
                     </ul>
                 </div>
 
-                <!-- Contact Info -->
+                <!-- Contact -->
                 <div>
-                    <h4 class="font-bold mb-5 text-green-300 uppercase text-xs tracking-wider">Kontak</h4>
-                    <ul class="space-y-4 text-sm text-green-100">
+                    <h4 class="font-bold text-lg mb-6">Kontak</h4>
+                    <ul class="space-y-4 text-green-100">
                         {% if config.alamat_desa %}
                         <li class="flex items-start gap-3">
-                            <svg class="w-5 h-5 mt-0.5 shrink-0 text-green-400" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                            <svg class="w-5 h-5 mt-1 shrink-0 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                             <span>{{ config.alamat_desa }}</span>
-                        </li>
-                        {% endif %}
-                        {% if config.kontak_telepon %}
-                        <li class="flex items-center gap-3">
-                            <svg class="w-5 h-5 shrink-0 text-green-400" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.574 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                            <span>{{ config.kontak_telepon }}</span>
                         </li>
                         {% endif %}
                         {% if config.kontak_whatsapp %}
                         <li class="flex items-center gap-3">
-                            <svg class="w-5 h-5 shrink-0 text-green-400" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg>
+                            <svg class="w-5 h-5 shrink-0 text-green-400" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                             <span>+{{ config.kontak_whatsapp }}</span>
                         </li>
                         {% endif %}
                         {% if config.kontak_email %}
                         <li class="flex items-center gap-3">
-                            <svg class="w-5 h-5 shrink-0 text-green-400" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                            <span class="break-all">{{ config.kontak_email }}</span>
+                            <svg class="w-5 h-5 shrink-0 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                            <span>{{ config.kontak_email }}</span>
                         </li>
                         {% endif %}
                     </ul>
@@ -727,122 +664,92 @@
             </div>
 
             <!-- Copyright -->
-            <div class="pt-6 border-t border-green-800 text-center">
-                <p class="text-green-300 text-xs">© {{ tahun }} {{ desa.nama }}. Hak Cipta Dilindungi.</p>
+            <div class="mt-12 pt-8 border-t border-green-800 text-center text-green-300 text-sm">
+                <p>© {{ tahun }} {{ desa.nama }}. Hak Cipta Dilindungi.</p>
             </div>
         </div>
     </footer>
 
+    <!-- Lightbox -->
+    <div id="lightbox" class="fixed inset-0 bg-black/90 z-[200] hidden items-center justify-center p-4" onclick="closeLightbox()">
+        <button class="absolute top-4 right-4 text-white text-3xl hover:text-gray-300" onclick="closeLightbox()">×</button>
+        <img id="lightbox-img" src="" alt="" class="max-w-full max-h-[90vh] object-contain rounded-lg">
+        <p id="lightbox-caption" class="absolute bottom-6 left-0 right-0 text-center text-white text-lg font-semibold"></p>
+    </div>
+
     <script>
-            // Featured News Carousel
-            (function () {
-                var track = document.getElementById('carousel-track');
-                var dots = document.querySelectorAll('.carousel-dot');
-                var prevBtn = document.getElementById('carousel-prev');
-                var nextBtn = document.getElementById('carousel-next');
+        // ── Scroll Reveal Animation ──
+        function reveal() {
+            var reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale, .animated-underline');
 
-                if (!track || dots.length <= 1) return;
+            reveals.forEach(function(element) {
+                var windowHeight = window.innerHeight;
+                var elementTop = element.getBoundingClientRect().top;
+                var elementVisible = 150;
 
-                var currentIndex = 0;
-                var totalSlides = dots.length;
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        }
 
-                function goToSlide(index) {
-                    // Handle wrap around
-                    if (index < 0) index = totalSlides - 1;
-                    if (index >= totalSlides) index = 0;
+        window.addEventListener('scroll', reveal);
+        window.addEventListener('load', reveal);
 
-                    currentIndex = index;
-                    var percentage = currentIndex * (100 / totalSlides);
-                    track.style.transform = 'translateX(-' + percentage + '%)';
+        // ── Date & Time - WIB (UTC+7) ──
+        function updateDateTime() {
+            const now = new Date();
+            const wibOffset = 7 * 60;
+            const localOffset = now.getTimezoneOffset();
+            const wibTime = new Date(now.getTime() + (wibOffset + localOffset) * 60000);
 
-                    // Update dots
-                    dots.forEach(function(dot, i) {
-                        if (i === currentIndex) {
-                            dot.classList.remove('bg-gray-300');
-                            dot.classList.add('bg-[#155C1B]');
-                        } else {
-                            dot.classList.remove('bg-[#155C1B]');
-                            dot.classList.add('bg-gray-300');
-                        }
+            const dateOptions = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
+            const dateStr = wibTime.toLocaleDateString('id-ID', dateOptions);
+
+            const hours = String(wibTime.getHours()).padStart(2, '0');
+            const minutes = String(wibTime.getMinutes()).padStart(2, '0');
+            const seconds = String(wibTime.getSeconds()).padStart(2, '0');
+            const timeStr = hours + ':' + minutes + ':' + seconds;
+
+            var dateEl = document.getElementById('current-date');
+            var timeEl = document.getElementById('current-time');
+            if (dateEl) dateEl.textContent = dateStr;
+            if (timeEl) timeEl.textContent = timeStr;
+        }
+
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        // ── Mobile Menu Toggle ──
+        var mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', function() {
+                var mobileMenu = document.getElementById('mobile-menu');
+                if (mobileMenu) {
+                    mobileMenu.classList.toggle('hidden');
+                    mobileMenu.classList.toggle('animate-fade-in-up');
+                }
+            });
+        }
+
+        // ── Smooth Scroll for Anchor Links ──
+        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+            anchor.addEventListener('click', function(e) {
+                var targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                var targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    e.preventDefault();
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
                     });
                 }
+            });
+        });
 
-                // Dot click
-                dots.forEach(function(dot, i) {
-                    dot.addEventListener('click', function() {
-                        goToSlide(i);
-                    });
-                });
-
-                // Arrow click
-                if (prevBtn) {
-                    prevBtn.addEventListener('click', function() {
-                        goToSlide(currentIndex - 1);
-                    });
-                }
-                if (nextBtn) {
-                    nextBtn.addEventListener('click', function() {
-                        goToSlide(currentIndex + 1);
-                    });
-                }
-
-                // Auto-rotate every 5 seconds
-                setInterval(function() {
-                    goToSlide(currentIndex + 1);
-                }, 5000);
-
-                // Swipe support
-                var touchStartX = 0;
-                var touchEndX = 0;
-
-                track.addEventListener('touchstart', function(e) {
-                    touchStartX = e.changedTouches[0].screenX;
-                });
-
-                track.addEventListener('touchend', function(e) {
-                    touchEndX = e.changedTouches[0].screenX;
-                    if (touchStartX - touchEndX > 50) {
-                        goToSlide(currentIndex + 1); // Swipe left = next
-                    } else if (touchEndX - touchStartX > 50) {
-                        goToSlide(currentIndex - 1); // Swipe right = prev
-                    }
-                });
-            })();
-
-            // Auto-cycle hero dots
-            (function () {
-                var dots = document.querySelectorAll('.dot');
-                if (dots.length > 1) {
-                    var i = 0;
-                    setInterval(function () {
-                        dots[i].classList.remove('dot-active', 'bg-white');
-                        dots[i].classList.add('bg-white/40');
-                        i = (i + 1) % dots.length;
-                        dots[i].classList.remove('bg-white/40');
-                        dots[i].classList.add('dot-active', 'bg-white');
-                    }, 3000);
-                }
-            })();
-
-        // Scroll reveal
-        (function () {
-            var targets = document.querySelectorAll('.reveal, .dusun-list');
-            if (!('IntersectionObserver' in window)) {
-                targets.forEach(function (el) { el.classList.add('is-visible'); });
-                return;
-            }
-            var observer = new IntersectionObserver(function (entries) {
-                entries.forEach(function (entry) {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.12 });
-            targets.forEach(function (el) { observer.observe(el); });
-        })();
-
-        // Lightbox
+        // ── Lightbox ──
         function openLightbox(imgSrc, caption) {
             var lightbox = document.getElementById('lightbox');
             var img = document.getElementById('lightbox-img');
@@ -852,6 +759,11 @@
                 cap.textContent = caption;
                 lightbox.classList.remove('hidden');
                 lightbox.classList.add('flex');
+                lightbox.style.opacity = '0';
+                setTimeout(function() {
+                    lightbox.style.opacity = '1';
+                    lightbox.style.transition = 'opacity 0.3s ease';
+                }, 10);
                 document.body.style.overflow = 'hidden';
             }
         }
@@ -859,18 +771,42 @@
         function closeLightbox() {
             var lightbox = document.getElementById('lightbox');
             if (lightbox) {
-                lightbox.classList.add('hidden');
-                lightbox.classList.remove('flex');
-                document.body.style.overflow = '';
+                lightbox.style.opacity = '0';
+                setTimeout(function() {
+                    lightbox.classList.add('hidden');
+                    lightbox.classList.remove('flex');
+                    document.body.style.overflow = '';
+                }, 300);
             }
         }
 
-        // Keyboard support for lightbox
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeLightbox();
         });
+
+        // ── Navbar Active State on Scroll ──
+        var sections = document.querySelectorAll('section[id]');
+        var navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', function() {
+            var scrollY = window.pageYOffset;
+
+            sections.forEach(function(section) {
+                var sectionHeight = section.offsetHeight;
+                var sectionTop = section.offsetTop - 100;
+                var sectionId = section.getAttribute('id');
+
+                if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                    navLinks.forEach(function(link) {
+                        link.classList.remove('nav-active');
+                        if (link.getAttribute('href') === '#' + sectionId ||
+                            (sectionId === 'hero' && link.getAttribute('href') === '/')) {
+                            link.classList.add('nav-active');
+                        }
+                    });
+                }
+            });
+        });
     </script>
-
 </body>
-
 </html>

@@ -3,7 +3,7 @@ Public Routes
 Berisi route-route yang dapat diakses publik (tanpa login)
 """
 
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for, request, session, flash, json
 from models import (
     get_desa_info,
     get_all_berita,
@@ -73,6 +73,9 @@ def index():
         galeri_list=galeri_list,
         config=config_data,
         tahun=datetime.now().year,
+        site_name=desa_info['nama'],
+        site_tagline=desa_info['tagline'],
+        site_description=desa_info['deskripsi'],
         show_maps=show_maps,
         show_stats=show_stats,
         show_dusun=show_dusun,
@@ -124,23 +127,40 @@ def detail_berita(berita_id):
 
 @public_bp.route("/surat")
 def surat_info():
-    """Halaman info layanan surat"""
-    desa_info = get_desa_info_with_maps()
-    return render_template(
-        "surat_info.html",
-        desa=desa_info,
-        nav_links=[{**n, "active": n["label"] == "Surat"} for n in NAV_LINKS],
-    )
+    """Redirect /surat ke /layanan"""
+    return redirect(url_for('public.layanan'))
 
 
 @public_bp.route("/layanan")
 def layanan():
-    """Halaman daftar layanan"""
+    """Halaman daftar layanan - redirect guest ke register"""
+    # Cek apakah user sudah login
+    if 'user_logged_in' not in session:
+        return redirect(url_for('user.register', next=url_for('public.layanan')))
+
+    # User sudah login, tampilkan form permohonan surat
+    from models import get_all_jenis_surat, create_permohonan_surat
+
+    jenis_surat = get_all_jenis_surat()
     desa_info = get_desa_info_with_maps()
+
+    # Handle form submission
+    if request.method == 'POST':
+        jenis_id = request.form.get('jenis_surat_id', '')
+        data = {}
+        for key, value in request.form.items():
+            if key not in ['jenis_surat_id']:
+                data[key] = value
+
+        create_permohonan_surat(session.get('user_id'), jenis_id, json.dumps(data))
+        flash('Permohonan surat berhasil diajukan! Mohon tunggu persetujuan.', 'success')
+        return redirect(url_for('user.dashboard'))
+
     return render_template(
-        "layanan.html",
+        "/user/surat_permohonan.html",
         desa=desa_info,
         nav_links=[{**n, "active": n["label"] == "Layanan"} for n in NAV_LINKS],
+        jenis_surat=jenis_surat,
     )
 
 
@@ -167,6 +187,10 @@ def kontak():
         nav_links=[{**n, "active": n["label"] == "Kontak"} for n in NAV_LINKS],
         kontak=kontak_data,
         tahun=datetime.now().year,
+        config=kontak_data,
+        site_name=desa_info['nama'],
+        site_tagline=desa_info['tagline'],
+        site_description=desa_info['deskripsi'],
     )
 
 
@@ -180,7 +204,10 @@ def galeri():
     return render_template(
         "galeri.html",
         desa=desa_info,
-        nav_links=[{**n, "active": n["label"] == "Lainnya"} for n in NAV_LINKS],
+        nav_links=[{**n, "active": n["label"] == "Galeri"} for n in NAV_LINKS],
         foto_list=foto_list,
         tahun=datetime.now().year,
+        site_name=desa_info['nama'],
+        site_tagline=desa_info['tagline'],
+        site_description=desa_info['deskripsi'],
     )
