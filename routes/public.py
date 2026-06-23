@@ -34,6 +34,7 @@ def index():
     # Get config values
     max_unggulan = int(get_config("berita_unggulan_tampil", 3))
     max_berita = int(get_config("berita_tampil_di_beranda", 6))
+    carousel_stacks = int(get_config("berita_carousel_stacks", 2))
 
     # Featured carousel - berita UNGGULAN saja
     featured_list = [b for b in berita_list if b.get('unggulan') == 1][:max_unggulan]
@@ -82,6 +83,7 @@ def index():
         show_hero=show_hero,
         show_views=show_views,
         show_tanggal=show_tanggal,
+        carousel_stacks=carousel_stacks,
     )
 
 

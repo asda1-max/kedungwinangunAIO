@@ -474,8 +474,19 @@
                                 <option value="1" {% if config.berita_unggulan_tampil == '1' %}selected{% endif %}>1 berita</option>
                                 <option value="2" {% if config.berita_unggulan_tampil == '2' %}selected{% endif %}>2 berita</option>
                                 <option value="3" {% if config.berita_unggulan_tampil == '3' %}selected{% endif %}>3 berita</option>
+                                <option value="4" {% if config.berita_unggulan_tampil == '4' %}selected{% endif %}>4 berita</option>
+                                <option value="5" {% if config.berita_unggulan_tampil == '5' %}selected{% endif %}>5 berita</option>
                             </select>
                             <div class="current-value">Maks berita yang ditandai Unggulan</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="berita_carousel_stacks">Jumlah Card Carousel</label>
+                            <select id="berita_carousel_stacks" name="berita_carousel_stacks">
+                                <option value="1" {% if config.berita_carousel_stacks == '1' %}selected{% endif %}>1 card</option>
+                                <option value="2" {% if config.berita_carousel_stacks == '2' %}selected{% endif %}>2 cards</option>
+                                <option value="3" {% if config.berita_carousel_stacks == '3' %}selected{% endif %}>3 cards</option>
+                            </select>
+                            <div class="current-value">Jumlah card berita yang tampil per slide</div>
                         </div>
                     </div>
                     <div class="form-group">

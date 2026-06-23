@@ -33,6 +33,7 @@ DEFAULT_CONFIG = {
     "berita_tampil_di_halaman": "12",
     "berita_tampilkan_views": "1",
     "berita_tampilkan_tanggal": "1",
+    "berita_carousel_stacks": "2",
 
     # Homepage Sections
     "tampilkan_maps": "1",

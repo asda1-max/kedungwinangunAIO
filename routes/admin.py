@@ -169,7 +169,8 @@ def config():
 
         # Berita Settings
         update_config("berita_tampil_di_beranda", request.form.get('berita_tampil_di_beranda', '6'))
-        update_config("berita_unggulan_tampil", request.form.get('berita_unggulan_tampil', '1'))
+        update_config("berita_unggulan_tampil", request.form.get('berita_unggulan_tampil', '3'))
+        update_config("berita_carousel_stacks", request.form.get('berita_carousel_stacks', '2'))
         update_config("berita_tampil_di_halaman", request.form.get('berita_tampil_di_halaman', '12'))
         update_config("berita_tampilkan_views", '1' if request.form.get('berita_tampilkan_views') else '0')
         update_config("berita_tampilkan_tanggal", '1' if request.form.get('berita_tampilkan_tanggal') else '0')
