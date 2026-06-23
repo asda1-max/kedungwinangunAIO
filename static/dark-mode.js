@@ -25,8 +25,8 @@
         }
     }
 
-    // Apply initial theme
-    var isDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
+    // Apply initial theme (default: light mode)
+    var isDark = savedTheme === 'dark';
     applyTheme(isDark);
 
     // Toggle on button click

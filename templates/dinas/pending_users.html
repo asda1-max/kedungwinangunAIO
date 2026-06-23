@@ -119,10 +119,10 @@
                             <td>{{ user.created_at }}</td>
                             <td>
                                 <div class="actions">
-                                    <form action="{{ url_for('dinas_approve_user', user_id=user.id) }}" method="POST" style="display: inline;">
+                                    <form action="{{ url_for('dinas.approve_user_route', user_id=user.id) }}" method="POST" style="display: inline;">
                                         <button type="submit" class="btn btn-approve" onclick="return confirm('Setujui pendaftaran {{ user.nama_lengkap }}?')">✓ Setuju</button>
                                     </form>
-                                    <form action="{{ url_for('dinas_reject_user', user_id=user.id) }}" method="POST" style="display: inline;">
+                                    <form action="{{ url_for('dinas.reject_user_route', user_id=user.id) }}" method="POST" style="display: inline;">
                                         <button type="submit" class="btn btn-reject" onclick="return confirm('Tolak pendaftaran {{ user.nama_lengkap }}?')">✗ Tolak</button>
                                     </form>
                                 </div>

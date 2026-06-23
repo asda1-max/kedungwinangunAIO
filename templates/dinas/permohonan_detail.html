@@ -173,8 +173,8 @@
                         <textarea id="catatan" name="catatan" placeholder="Tambahkan catatan jika diperlukan"></textarea>
                     </div>
                     <div class="btn-group">
-                        <button type="submit" formaction="{{ url_for('dinas_approve_permit', permit_id=permit.id) }}" class="btn btn-primary">✓ Setujui & Terbitkan Surat</button>
-                        <button type="submit" formaction="{{ url_for('dinas_reject_permit', permit_id=permit.id) }}" class="btn btn-outline" onclick="return confirm('Tolak permohonan ini?')">✗ Tolak Permohonan</button>
+                        <button type="submit" formaction="{{ url_for('dinas.approve_permit_route', permit_id=permit.id) }}" class="btn btn-primary">✓ Setujui & Terbitkan Surat</button>
+                        <button type="submit" formaction="{{ url_for('dinas.reject_permit_route', permit_id=permit.id) }}" class="btn btn-outline" onclick="return confirm('Tolak permohonan ini?')">✗ Tolak Permohonan</button>
                     </div>
                 </form>
             </div>

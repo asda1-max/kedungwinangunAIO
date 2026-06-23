@@ -357,7 +357,7 @@
         </div>
 
         <div class="card">
-            <form method="POST" action="{{ url_for('admin_edit_berita', berita_id=berita.id) }}">
+            <form method="POST" action="{{ url_for('admin.edit_berita_route', berita_id=berita.id) }}">
                 <div class="form-group">
                     <label for="judul">Judul Berita <span class="required">*</span></label>
                     <input type="text" id="judul" name="judul" value="{{ berita.judul }}" placeholder="Ketik judul berita di sini..." required>

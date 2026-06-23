@@ -176,10 +176,10 @@
                             <td>{{ user.created_at }}</td>
                             <td>
                                 <div class="actions">
-                                    <form action="{{ url_for('dinas_approve_user', user_id=user.id) }}" method="POST" style="display: inline;">
+                                    <form action="{{ url_for('dinas.approve_user_route', user_id=user.id) }}" method="POST" style="display: inline;">
                                         <button type="submit" class="btn-action btn-approve" onclick="return confirm('Setujui pendaftaran ini?')">✓ Setuju</button>
                                     </form>
-                                    <form action="{{ url_for('dinas_reject_user', user_id=user.id) }}" method="POST" style="display: inline;">
+                                    <form action="{{ url_for('dinas.reject_user_route', user_id=user.id) }}" method="POST" style="display: inline;">
                                         <button type="submit" class="btn-action btn-reject" onclick="return confirm('Tolak pendaftaran ini?')">✗ Tolak</button>
                                     </form>
                                 </div>
@@ -226,7 +226,7 @@
                             <td>{{ permit.created_at }}</td>
                             <td>
                                 <div class="actions">
-                                    <a href="{{ url_for('dinas_permohonan_detail', permit_id=permit.id) }}" class="btn-action btn-view">👁</a>
+                                    <a href="{{ url_for('dinas.permohonan_detail', permit_id=permit.id) }}" class="btn-action btn-view">👁</a>
                                 </div>
                             </td>
                         </tr>
