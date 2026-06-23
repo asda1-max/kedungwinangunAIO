@@ -81,7 +81,7 @@ if __name__ == "__main__":
     init_database()
 
     # Get port from environment or default to 5000
-    port = int(environ.get('PORT', 5000))
+    port = int(environ.get('PORT', 5209))
 
     # Run development server
     app.run(
