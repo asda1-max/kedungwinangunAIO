@@ -1,3 +1,129 @@
+<<<<<<< HEAD
+{% extends 'dinas/base.html' %}
+
+{% block title %}Dashboard - Panel Dinas{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block page_subtitle %}Kelola pendaftaran dan permohonan surat warga{% endblock %}
+
+{% block content %}
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="stat-card green animate-fade-in stagger-1">
+        <div class="stat-icon">📝</div>
+        <div class="stat-value">{{ pending_users_count }}</div>
+        <div class="stat-label">Pendaftaran Pending</div>
+    </div>
+    <div class="stat-card red animate-fade-in stagger-2">
+        <div class="stat-icon">⏳</div>
+        <div class="stat-value">{{ pending_permits_count }}</div>
+        <div class="stat-label">Surat Pending</div>
+    </div>
+    <div class="stat-card blue animate-fade-in stagger-3">
+        <div class="stat-icon">✅</div>
+        <div class="stat-value">{{ approved_count }}</div>
+        <div class="stat-label">Disetujui</div>
+    </div>
+    <div class="stat-card yellow animate-fade-in stagger-4">
+        <div class="stat-icon">👥</div>
+        <div class="stat-value">{{ total_warga }}</div>
+        <div class="stat-label">Total Warga</div>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- Pending Users -->
+    <div class="card animate-fade-in" style="animation-delay: 0.2s;">
+        <div class="p-6 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between">
+            <h3 class="text-lg font-bold flex items-center gap-3">
+                <span class="w-10 h-10 bg-amber-100 dark:bg-amber-900/30 rounded-xl flex items-center justify-center text-xl">📝</span>
+                Pendaftaran Pending
+            </h3>
+            <a href="{{ url_for('dinas.pending_users') }}" class="text-sm font-semibold text-emerald-600 hover:text-emerald-700">Lihat semua →</a>
+        </div>
+        <div class="table-container">
+            {% if recent_pending_users %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>NIK</th>
+                        <th>Nama</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in recent_pending_users %}
+                    <tr>
+                        <td><code>{{ user.nik }}</code></td>
+                        <td class="font-medium">{{ user.nama_lengkap }}</td>
+                        <td>
+                            <div class="flex items-center gap-2">
+                                <form action="{{ url_for('dinas.approve_user_route', user_id=user.id) }}" method="POST">
+                                    <button type="submit" class="btn btn-approve text-xs py-2 px-3">✓</button>
+                                </form>
+                                <form action="{{ url_for('dinas.reject_user_route', user_id=user.id) }}" method="POST">
+                                    <button type="submit" class="btn btn-reject text-xs py-2 px-3" onclick="return confirm('Tolak pendaftaran ini?')">✗</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="empty-state">
+                <div class="empty-icon">✓</div>
+                <h3 class="text-lg font-semibold mb-2">Tidak ada pendaftaran pending</h3>
+                <p class="text-slate-500 dark:text-slate-400">Semua pendaftaran sudah diproses</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Pending Permits -->
+    <div class="card animate-fade-in" style="animation-delay: 0.3s;">
+        <div class="p-6 border-b border-slate-100 dark:border-slate-700 flex items-center justify-between">
+            <h3 class="text-lg font-bold flex items-center gap-3">
+                <span class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center text-xl">📄</span>
+                Permohonan Surat Pending
+            </h3>
+            <a href="{{ url_for('dinas.permohonan_list') }}" class="text-sm font-semibold text-emerald-600 hover:text-emerald-700">Lihat semua →</a>
+        </div>
+        <div class="table-container">
+            {% if recent_permits %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>NIK</th>
+                        <th>Nama</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for permit in recent_permits %}
+                    <tr>
+                        <td class="text-slate-400">#{{ permit.id }}</td>
+                        <td><code>{{ permit.nik }}</code></td>
+                        <td class="font-medium">{{ permit.nama_lengkap }}</td>
+                        <td>
+                            <a href="{{ url_for('dinas.permohonan_detail', permit_id=permit.id) }}" class="btn btn-view text-xs py-2 px-3">👁</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="empty-state">
+                <div class="empty-icon">📭</div>
+                <h3 class="text-lg font-semibold mb-2">Belum ada permohonan surat</h3>
+                <p class="text-slate-500 dark:text-slate-400">Permohonan dari warga akan muncul di sini</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+=======
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -364,3 +490,4 @@
     </script>
 </body>
 </html>
+>>>>>>> 894d528b3684371c363d36a31d31d4b7cf671395

@@ -1,123 +1,57 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Permohonan Surat - Dinas</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --bg: #f5f5f4; --surface: #ffffff; --border: #e7e5e4; --text: #1c1917; --text-muted: #78716c; --primary: #166534; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
-        .navbar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 24px; height: 60px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-        .nav-brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 15px; text-decoration: none; color: var(--text); }
-        .nav-brand .icon { width: 32px; height: 32px; background: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
-        .nav-brand .icon svg { width: 18px; height: 18px; fill: white; }
-        .nav-links { display: none; gap: 4px; }
-        @media (min-width: 640px) { .nav-links { display: flex; } }
-        .nav-link { padding: 8px 14px; text-decoration: none; color: var(--text-muted); font-size: 14px; font-weight: 500; border-radius: 6px; }
-        .nav-link:hover, .nav-link.active { background: var(--bg); color: var(--text); }
-        .nav-right { display: flex; align-items: center; gap: 12px; }
-        .user-info { display: flex; align-items: center; gap: 8px; padding: 6px 12px; background: var(--bg); border-radius: 100px; font-size: 13px; font-weight: 500; }
-        .btn-ghost { padding: 8px 14px; background: transparent; border: 1px solid var(--border); border-radius: 6px; font-size: 13px; font-weight: 500; color: var(--text-muted); text-decoration: none; }
-        .main { max-width: 1200px; margin: 0 auto; padding: 28px 24px; }
-        .page-header { margin-bottom: 28px; }
-        .page-header h1 { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
-        .page-header p { color: var(--text-muted); font-size: 14px; }
-        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
-        .table-wrap { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; min-width: 900px; }
-        th { text-align: left; padding: 14px 18px; font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; background: #fafaf9; border-bottom: 1px solid var(--border); }
-        td { padding: 16px 18px; font-size: 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
-        tr:hover td { background: #fafaf9; }
-        .badge { display: inline-flex; padding: 4px 10px; border-radius: 100px; font-size: 12px; font-weight: 500; }
-        .badge-pending { background: #fffbeb; color: #92400e; }
-        .badge-approved { background: #dcfce7; color: #166534; }
-        .badge-rejected { background: #fef2f2; color: #dc2626; }
-        .actions { display: flex; gap: 8px; }
-        .btn { padding: 8px 14px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: none; border: none; font-family: inherit; display: inline-flex; align-items: center; gap: 6px; }
-        .btn-view { background: #dbeafe; color: #1d4ed8; }
-        .btn-view:hover { background: #1d4ed8; color: white; }
-        .btn-edit { background: #fef3c7; color: #b45309; }
-        .btn-edit:hover { background: #d97706; color: white; }
-        .empty { text-align: center; padding: 60px 20px; color: var(--text-muted); }
-        .empty-icon { font-size: 56px; margin-bottom: 16px; }
-        .filters { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
-        .filter-btn { padding: 8px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; font-size: 13px; font-weight: 500; color: var(--text-muted); text-decoration: none; cursor: pointer; }
-        .filter-btn:hover { border-color: var(--primary); color: var(--primary); }
-        .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
-    </style>
-</head>
-<body>
-    <nav class="navbar">
-        <div class="nav-left">
-            <a href="{{ url_for('public.index') }}" class="nav-brand">
-                <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3L4 9v12h16V9l-8-6zm6 16h-3v-5h-6v5H6v-9.5l6-4.5 6 4.5V19z"/></svg></div>
-                Kedungwinangun
-            </a>
-            <div class="nav-links">
-                <a href="{{ url_for('dinas.dashboard') }}" class="nav-link">Dashboard</a>
-                <a href="{{ url_for('dinas.pending_users') }}" class="nav-link">Pendaftaran</a>
-                <a href="{{ url_for('dinas.permohonan_list') }}" class="nav-link active">Permohonan Surat</a>
-                <a href="{{ url_for('dinas.all_users') }}" class="nav-link">Data Warga</a>
-            </div>
-        </div>
-        <div class="nav-right">
-            <div class="user-info"><span>{{ session.user_nama }}</span></div>
-            <a href="{{ url_for('user.logout') }}" class="btn-ghost">Keluar</a>
-        </div>
-    </nav>
+{% extends 'dinas/base.html' %}
 
-    <main class="main">
-        <div class="page-header">
-            <h1>Daftar Permohonan Surat</h1>
-            <p>Kelola semua permohonan surat dari warga</p>
-        </div>
+{% block title %}Daftar Permohonan Surat - Panel Dinas{% endblock %}
+{% block page_title %}Daftar Permohonan Surat{% endblock %}
+{% block page_subtitle %}Kelola semua permohonan surat dari warga{% endblock %}
 
-        <div class="card">
-            <div class="table-wrap">
-                {% if permits %}
-                <table>
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>NIK</th>
-                            <th>Nama</th>
-                            <th>Jenis Surat</th>
-                            <th>No. Surat</th>
-                            <th>Status</th>
-                            <th>Tanggal</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for permit in permits %}
-                        <tr>
-                            <td>{{ loop.index }}</td>
-                            <td><code style="background: #f5f5f5; padding: 2px 6px; border-radius: 4px;">{{ permit.nik }}</code></td>
-                            <td>{{ permit.nama_lengkap }}</td>
-                            <td>{{ permit.jenis_nama }}</td>
-                            <td>{{ permit.nomor_surat or '-' }}</td>
-                            <td><span class="badge badge-{{ permit.status }}">{{ permit.status|title }}</span></td>
-                            <td>{{ permit.created_at }}</td>
-                            <td>
-                                <div class="actions">
-                                    <a href="{{ url_for('dinas.permohonan_detail', permit_id=permit.id) }}" class="btn btn-view">👁 Detail</a>
-                                </div>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                {% else %}
-                <div class="empty">
-                    <div class="empty-icon">📄</div>
-                    <p>Belum ada permohonan surat</p>
-                </div>
-                {% endif %}
-            </div>
+{% block content %}
+<div class="card">
+    <div class="table-container">
+        {% if permits %}
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>NIK</th>
+                    <th>Nama</th>
+                    <th>Jenis Surat</th>
+                    <th>No. Surat</th>
+                    <th>Status</th>
+                    <th>Tanggal</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for permit in permits %}
+                <tr>
+                    <td class="text-slate-400 font-medium">#{{ loop.index }}</td>
+                    <td><code>{{ permit.nik }}</code></td>
+                    <td class="font-semibold">{{ permit.nama_lengkap }}</td>
+                    <td>{{ permit.jenis_nama }}</td>
+                    <td class="text-slate-500">{{ permit.nomor_surat or '-' }}</td>
+                    <td>
+                        <span class="badge badge-{{ permit.status }}">
+                            {% if permit.status == 'pending' %}⏳{% elif permit.status == 'approved' %}✅{% else %}✗{% endif %}
+                            {{ permit.status|title }}
+                        </span>
+                    </td>
+                    <td class="text-slate-500">{{ permit.created_at }}</td>
+                    <td>
+                        <a href="{{ url_for('dinas.permohonan_detail', permit_id=permit.id) }}" class="btn btn-view">
+                            👁 Detail
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-icon">📄</div>
+            <h3 class="text-lg font-semibold mb-2">Belum ada permohonan surat</h3>
+            <p class="text-slate-500 dark:text-slate-400">Permohonan dari warga akan muncul di sini</p>
         </div>
-    </main>
-</body>
-</html>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
